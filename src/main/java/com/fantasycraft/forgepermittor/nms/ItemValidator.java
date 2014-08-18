@@ -1,6 +1,7 @@
 package com.fantasycraft.forgepermittor.nms;
 
 import com.fantasycraft.forgepermittor.info.ItemType;
+import com.fantasycraft.forgepermittor.nms.Handlers.BlockHandler;
 import com.fantasycraft.forgepermittor.nms.Handlers.ItemBlock;
 import com.fantasycraft.forgepermittor.nms.Handlers.NMSItemstack;
 import lombok.Getter;
@@ -52,9 +53,9 @@ public class ItemValidator {
             if (nmsResolver.getBlockContainer().isInstance(object))
                 return ItemType.Container;
             if (nmsResolver.getBlock().isInstance(object)){
-                com.fantasycraft.forgepermittor.nms.Handlers.Block block =
-                        new com.fantasycraft.forgepermittor.nms.Handlers.Block(object, nmsResolver);
-                if (block.IsContainer(meta))
+                BlockHandler blockHandler =
+                        new BlockHandler(object, nmsResolver);
+                if (blockHandler.IsContainer(meta))
                     return ItemType.Container;
                 else
                     return ItemType.Block;

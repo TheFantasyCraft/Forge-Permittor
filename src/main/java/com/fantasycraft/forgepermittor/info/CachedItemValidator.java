@@ -1,5 +1,6 @@
 package com.fantasycraft.forgepermittor.info;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.nms.ItemValidator;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
@@ -15,16 +16,26 @@ import java.util.Map;
 public class CachedItemValidator extends ItemValidator {
 
     @Getter
-    Map<ItemInfo, ItemType> FoundedBlocks;
-
+    private Map<ItemInfo, ItemType> FoundedItems;
+    @Getter
+    private Map<ItemInfo, ItemType> FoundedBlocks;
     public CachedItemValidator(NMSResolver nmsResolver) {
         super(nmsResolver);
+        this.FoundedItems = new HashMap<ItemInfo, ItemType>();
         this.FoundedBlocks = new HashMap<ItemInfo, ItemType>();
     }
 
     @Override
     public ItemType CheckBlock(Block block) {
-        return super.CheckBlock(block);
+        ItemInfo itemInfo = new ItemInfo(block);
+        ItemType itemType = FoundedBlocks.get(itemInfo);
+        if (itemType == null){
+            itemType = this.CheckBlock(block);
+            FoundedBlocks.put(itemInfo,itemType );
+        }
+        else
+            ForgePermittor.log("Cached!", true);
+        return itemType;
     }
 
     @Override

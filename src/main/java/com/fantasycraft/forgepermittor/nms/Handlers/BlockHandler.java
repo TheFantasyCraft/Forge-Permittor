@@ -9,30 +9,31 @@ import java.lang.reflect.Method;
 /**
  * Created by thomas on 8/17/2014.
  */
-public class Block {
+public class BlockHandler {
 
-    @Getter
-    public Object object;
     @Getter
     public NMSResolver nmsResolver;
 
     public Method method;
 
-    public Block (Object object, NMSResolver nmsResolver){
-        this.object = object;
+    public BlockHandler(NMSResolver nmsResolver){
         this.nmsResolver = nmsResolver;
 
         try {
+            //New Forge methode
             method =  getNmsResolver().getBlock().getMethod("hasTileEntity", int.class);
-            if (method == null)
-                method =  getNmsResolver().getBlock().getMethod("hasTileEntity");
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            try {
+                //Depricated Forge Methode
+                method =  getNmsResolver().getBlock().getMethod("hasTileEntity");
+            } catch (NoSuchMethodException e1) {
+
+            }
         }
 
     }
 
-    public boolean IsContainer(byte meta){
+    public boolean IsContainer( Object object, byte meta){
         try {
             return (Boolean) method.invoke(object, (int) meta );
         } catch (IllegalAccessException e) {
