@@ -1,9 +1,7 @@
 package com.fantasycraft.forgepermittor.nms;
 
+import com.fantasycraft.forgepermittor.info.BlockInfo;
 import com.fantasycraft.forgepermittor.info.ItemType;
-import com.fantasycraft.forgepermittor.nms.Handlers.BlockHandler;
-import com.fantasycraft.forgepermittor.nms.Handlers.ItemBlock;
-import com.fantasycraft.forgepermittor.nms.Handlers.NMSItemstack;
 import lombok.Getter;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -23,18 +21,18 @@ public class ItemValidator {
 
     public ItemType CheckItem(ItemStack stack) {
         int ItemID = stack.getTypeId();
-        byte Meta = stack.getData().getData();
+        byte meta = stack.getData().getData();
 
         Object item = nmsResolver.getItemList().get(ItemID);
         if (item != null) {
-            if (nmsResolver.getItemBlock().isInstance(item))
-                return CheckBlock(new ItemBlock(item, nmsResolver).getBlockID(), Meta);
-            else if (nmsResolver.getItemFood().isInstance(item))
+            if (nmsResolver.getItemFood().isInstance(item))
                 return ItemType.Food;
             else if (nmsResolver.getItemSword().isInstance(item))
                 return ItemType.Sword;
+            else if (nmsResolver.getItemBlock().isInstance(item))
+                return CheckItem( item, ItemID, meta);
             else if (nmsResolver.getItem().isInstance(item)) {
-                if (new NMSItemstack(stack, nmsResolver).HasTagCompound())
+                if (nmsResolver.getItemStackHandler().HasTagCompound(nmsResolver.getCraftItemStackHandler().asNMSCopy(stack)))
                     return ItemType.AdvItem;
                 return ItemType.Item;
             }
@@ -42,25 +40,35 @@ public class ItemValidator {
         return ItemType.Unknown;
     }
 
-    public ItemType CheckBlock(Block block){
-       return CheckBlock(block.getTypeId(), block.getData());
 
+    public BlockInfo CheckBlock(Block block){
+        if (block.getTypeId() < 4096) {
+            Object object = nmsResolver.getBlockList().get(block.getTypeId());
+            if (nmsResolver.getBlockContainer().isInstance(object))
+                return BlockInfo.Container;
+            if (nmsResolver.getBlock().isInstance(object)){
+                if (nmsResolver.getCraftWorldHandler().HasTileEntity(block) )
+                    return BlockInfo.Container;
+                else
+                    return BlockInfo.Block;
+            }
+
+        }
+        return BlockInfo.Unknown;
     }
 
-    public ItemType CheckBlock(int ItemID, byte meta){
-        if (ItemID < 4096) {
-            Object object = nmsResolver.getBlockList().get(ItemID);
+    private ItemType CheckItem(Object item , int ItemID, byte meta){
+        if (ItemID < nmsResolver.getBlockList().getLength()) {
+            int ID = nmsResolver.getItemBlockHandler().getBlockID(item);
+            Object object = nmsResolver.getBlockList().get(ID);
             if (nmsResolver.getBlockContainer().isInstance(object))
                 return ItemType.Container;
-            if (nmsResolver.getBlock().isInstance(object)){
-                BlockHandler blockHandler =
-                        new BlockHandler(object, nmsResolver);
-                if (blockHandler.IsContainer(meta))
+            else if (nmsResolver.getBlock().isInstance(object)){
+                if (nmsResolver.getBlockHandler().IsContainer(object, ID , meta))
                     return ItemType.Container;
                 else
                     return ItemType.Block;
             }
-
         }
         return ItemType.Unknown;
     }

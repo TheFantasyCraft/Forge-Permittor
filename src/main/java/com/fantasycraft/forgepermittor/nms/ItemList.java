@@ -37,4 +37,7 @@ public class ItemList {
         return Array.get(list, ID);
     }
 
+    public int getLength() {
+        return Array.getLength(list);
+    }
 }

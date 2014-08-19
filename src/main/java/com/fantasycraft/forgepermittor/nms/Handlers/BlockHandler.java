@@ -1,6 +1,8 @@
 package com.fantasycraft.forgepermittor.nms.Handlers;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
+import com.fantasycraft.forgepermittor.nms.util.Util;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,28 +16,27 @@ public class BlockHandler {
     @Getter
     public NMSResolver nmsResolver;
 
-    public Method method;
+    public Method HasTileEntity;
 
     public BlockHandler(NMSResolver nmsResolver){
         this.nmsResolver = nmsResolver;
 
         try {
-            //New Forge methode
-            method =  getNmsResolver().getBlock().getMethod("hasTileEntity", int.class);
+            HasTileEntity =  getNmsResolver().getBlock().getMethod("hasTileEntity", int.class);
         } catch (NoSuchMethodException e) {
-            try {
-                //Depricated Forge Methode
-                method =  getNmsResolver().getBlock().getMethod("hasTileEntity");
-            } catch (NoSuchMethodException e1) {
-
-            }
+            ForgePermittor.log("Outdated Forge ( or updated Bukkit xD ) !! Using Other methode to find Container Block on Items", false);
         }
-
     }
 
-    public boolean IsContainer( Object object, byte meta){
+    public boolean IsContainer(Object object,int ID,  byte meta){
+        if (HasTileEntity == null) {
+            //Smells like an OutDated Forge or Craftbukkit Server, Its good that i have the brains to figure out another way to get this!!
+            System.out.println("Smells like Bukkit");
+            return Util.ClassHasmethodeWithReturnType(nmsResolver.getBlockList().get(ID).getClass(), nmsResolver.getTileEntity(), nmsResolver.getBlock());
+        }
+        System.out.println("Oh lord Forge <3!");
         try {
-            return (Boolean) method.invoke(object, (int) meta );
+            return (Boolean) HasTileEntity.invoke(object, (int) meta );
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -43,5 +44,4 @@ public class BlockHandler {
         }
         return true;
     }
-
 }

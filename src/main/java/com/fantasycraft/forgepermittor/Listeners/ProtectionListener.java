@@ -13,10 +13,10 @@ public class ProtectionListener implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event){
         if (event.hasItem()){
-            ForgePermittor.log(ForgePermittor.getInstance().getItemValidator().CheckItem(event.getItem()).toString(), true);
+            ForgePermittor.log("ItemType: " + ForgePermittor.getInstance().getItemValidator().CheckItem(event.getItem()).toString(), true);
         }
         if (event.hasBlock())
-            ForgePermittor.log(ForgePermittor.getInstance().getItemValidator().CheckBlock(event.getClickedBlock()).toString(), true);
+            ForgePermittor.log("BlockType: " +ForgePermittor.getInstance().getItemValidator().CheckBlock(event.getClickedBlock()).toString(), true);
     }
 
 }

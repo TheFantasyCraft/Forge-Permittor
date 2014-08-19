@@ -1,5 +1,7 @@
 package com.fantasycraft.forgepermittor.nms;
 
+import com.fantasycraft.forgepermittor.nms.Handlers.*;
+import lombok.Data;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,36 +11,34 @@ import java.lang.reflect.Method;
 /**
  * Created by thomas on 8/16/2014.
  */
+@Data
 public class NMSResolver {
 
     //craftbukkit
-    @Getter
     private Class CraftItemStack;
-    @Getter
     private Class CraftOfflinePlayer;
-
+    private Class CraftWorld;
     //nms
-    @Getter
     private Class ItemStack;
-    @Getter
     private Class NBTTagCompound;
-    @Getter
     private Class Block;
-    @Getter
     private Class Item;
-    @Getter
     private Class BlockContainer;
-    @Getter
     private Class ItemSword;
-    @Getter
     private Class ItemFood;
-    @Getter
     private Class ItemBlock;
+    private Class TileEntity;
 
-    @Getter
+
     private ItemList BlockList;
-    @Getter
     private ItemList ItemList;
+
+    BlockHandler blockHandler;
+    CraftWorldHandler craftWorldHandler;
+    CraftItemStackHandler craftItemStackHandler;
+    ItemStackHandler itemStackHandler;
+    ItemBlockHandler itemBlockHandler;
+
 
 
 
@@ -51,8 +51,11 @@ public class NMSResolver {
         this.craftbukkit = findCraftBukkit();
         this.CraftItemStack = Class.forName(getCraftbukkit() + ".inventory.CraftItemStack");
         this.CraftOfflinePlayer = Class.forName(getCraftbukkit() + ".CraftOfflinePlayer");
+        this.CraftWorld = Class.forName(getCraftbukkit() + ".CraftWorld");
+
         this.NBTTagCompound = getPrivatemethode("getData", getCraftOfflinePlayer()).getReturnType();
         this.ItemStack = FindConstructorSingleParameter(this.getCraftItemStack());
+        this.TileEntity = getCraftWorld().getMethod("getTileEntityAt", int.class, int.class, int.class).getReturnType();
 
         for (Constructor c : this.getItemStack().getConstructors()) {
             if (!c.getParameterTypes()[0].isPrimitive()) {
@@ -72,6 +75,13 @@ public class NMSResolver {
         this.ItemSword = getItemList().get(267).getClass();
         this.ItemFood = getItemList().get(319).getClass();
         this.ItemBlock = getItemList().get(106).getClass().getSuperclass();
+
+        this.blockHandler = new BlockHandler(this);
+        this.craftWorldHandler = new CraftWorldHandler(this);
+        this.itemStackHandler = new ItemStackHandler(this);
+        this.craftItemStackHandler = new CraftItemStackHandler(this);
+        this.itemBlockHandler = new ItemBlockHandler(this);
+
     }
 
     private String findCraftBukkit(){

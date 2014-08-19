@@ -9,17 +9,14 @@ import java.lang.reflect.Method;
 /**
  * Created by thomas on 8/17/2014.
  */
-public class ItemBlock {
+public class ItemBlockHandler {
 
-    @Getter
-    private Object object;
     @Getter
     private NMSResolver nmsResolver;
 
     private Method method;
 
-    public ItemBlock(Object object, NMSResolver nmsResolver) {
-        this.object = object;
+    public ItemBlockHandler(NMSResolver nmsResolver) {
         this.nmsResolver = nmsResolver;
 
         for (Method m : nmsResolver.getItemBlock().getDeclaredMethods() ){
@@ -31,7 +28,7 @@ public class ItemBlock {
 
     }
 
-    public int getBlockID(){
+    public int getBlockID(Object object){
         try {
             return (Integer) method.invoke(object);
         }
