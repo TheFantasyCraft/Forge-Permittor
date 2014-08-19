@@ -32,7 +32,7 @@ public class BlockHandler {
         if (HasTileEntity == null) {
             //Smells like an OutDated Forge or Craftbukkit Server, Its good that i have the brains to figure out another way to get this!!
             System.out.println("Smells like Bukkit");
-            return Util.ClassHasmethodeWithReturnType(nmsResolver.getBlockList().get(ID).getClass(), nmsResolver.getTileEntity(), nmsResolver.getBlock());
+            return Util.ClassHasmethodeWithReturnType(nmsResolver.getBlockList().get(ID).getClass(), nmsResolver.getTileEntity());
         }
         System.out.println("Oh lord Forge <3!");
         try {

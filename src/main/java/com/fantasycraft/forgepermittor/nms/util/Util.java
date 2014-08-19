@@ -7,9 +7,9 @@ import java.lang.reflect.Method;
  */
 public class Util {
 
-    public static boolean ClassHasmethodeWithReturnType(Class clasS, Class Returntype, Class SuperClass){
+    public static boolean ClassHasmethodeWithReturnType(Class clasS, Class Returntype){
         for (Method m : clasS.getDeclaredMethods())
-            if (m.getReturnType().isAssignableFrom(Returntype) /*&& !m.getClass().getName().equalsIgnoreCase(SuperClass.getName())*/) {
+            if (m.getReturnType().isAssignableFrom(Returntype)) {
                 System.out.println(m);
                 return true;
             }
