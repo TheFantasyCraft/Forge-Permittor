@@ -47,7 +47,7 @@ public class NMSResolver {
     @Getter
     private String craftbukkit;
 
-    public NMSResolver() throws ClassNotFoundException, NoSuchMethodException {
+    public NMSResolver() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException {
         this.craftbukkit = findCraftBukkit();
         this.CraftItemStack = Class.forName(getCraftbukkit() + ".inventory.CraftItemStack");
         this.CraftOfflinePlayer = Class.forName(getCraftbukkit() + ".CraftOfflinePlayer");
@@ -58,20 +58,20 @@ public class NMSResolver {
         this.TileEntity = getCraftWorld().getMethod("getTileEntityAt", int.class, int.class, int.class).getReturnType();
 
         for (Constructor c : this.getItemStack().getConstructors()) {
-            if (!c.getParameterTypes()[0].isPrimitive()) {
-                if (this.getItem() != null && !this.getItem().isAssignableFrom(c.getParameterTypes()[0])) {
-                    this.Block = c.getParameterTypes()[0];
-                    break;
+            if (c.getParameterTypes().length == 1 && !c.getParameterTypes()[0].isPrimitive()) {
+                ItemList list = new ItemList(c.getParameterTypes()[0]);
+                System.out.println(list.getLength() + " " + c.getParameterTypes()[0].getName());
+                if (list.getLength() == 4096){
+                    Block = c.getParameterTypes()[0];
+                    this.BlockList = list;
+                }else{
+                    Item = c.getParameterTypes()[0];
+                    this.ItemList = list;
                 }
-                else
-                    this.Item = c.getParameterTypes()[0];
-
             }
         }
 
-        this.BlockList = new ItemList(Block);
         this.BlockContainer = getBlockList().get(54).getClass().getSuperclass();
-        this.ItemList = new ItemList(Item);
         this.ItemSword = getItemList().get(267).getClass();
         this.ItemFood = getItemList().get(319).getClass();
         this.ItemBlock = getItemList().get(106).getClass().getSuperclass();
