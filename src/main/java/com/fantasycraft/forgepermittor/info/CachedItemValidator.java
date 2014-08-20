@@ -4,7 +4,6 @@ import com.fantasycraft.forgepermittor.nms.ItemValidator;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.sk89q.worldedit.blocks.BlockType;
 import lombok.Getter;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +34,10 @@ public class CachedItemValidator extends ItemValidator {
         else
             ForgePermittor.log("Cached!", true);
         return blocktype;
-    }*/
+    }
 
     @Override
     public ItemType CheckItem(ItemStack stack) {
         return super.CheckItem(stack);
-    }
+    }*/
 }
