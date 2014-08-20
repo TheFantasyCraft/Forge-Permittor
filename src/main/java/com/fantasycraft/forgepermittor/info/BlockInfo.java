@@ -6,6 +6,7 @@ package com.fantasycraft.forgepermittor.info;
 public enum BlockInfo {
     Container,
     Block,
+    Connectable,
 
     Unknown
 }

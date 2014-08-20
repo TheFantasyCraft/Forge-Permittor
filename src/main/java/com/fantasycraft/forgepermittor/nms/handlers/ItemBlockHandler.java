@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.nms.Handlers;
+package com.fantasycraft.forgepermittor.nms.handlers;
 
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.nms.util.Util;

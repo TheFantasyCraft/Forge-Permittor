@@ -1,6 +1,6 @@
 package com.fantasycraft.forgepermittor.nms;
 
-import com.fantasycraft.forgepermittor.nms.Handlers.*;
+import com.fantasycraft.forgepermittor.nms.handlers.*;
 import lombok.Data;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
@@ -39,9 +39,6 @@ public class NMSResolver {
     CraftItemStackHandler craftItemStackHandler;
     ItemStackHandler itemStackHandler;
     ItemBlockHandler itemBlockHandler;
-
-
-
 
     final private String CraftbukkitLocation = "org.bukkit.craftbukkit";
 
@@ -96,18 +93,6 @@ public class NMSResolver {
             }
         }
         return CraftbukkitLocation;
-    }
-
-    private Class FindBlockContainer(){
-       return null;
-    }
-
-    private Class FindReturnMethodeFor(Class ClasS , String Methodename){
-        for (Method m : ClasS.getMethods()){
-            if (m.getName().equalsIgnoreCase(Methodename))
-                return m.getReturnType();
-        }
-        throw new ClassCastException();
     }
 
     private Class FindConstructorSingleParameter(Class ClasS){

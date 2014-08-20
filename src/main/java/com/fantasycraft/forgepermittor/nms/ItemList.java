@@ -39,8 +39,7 @@ public class ItemList {
             }
         }
 
-        System.out.println("This looks like 1.7.X lets try something hacky to solve this :)!");
-
+        //Methods For 1.7.X
         this.GetBlock = Util.getMethode(getItemClass(), getItemClass(), Modifier.STATIC + Modifier.PUBLIC , int.class);
         this.GetBlockString = Util.getMethode(getItemClass(), getItemClass(), Modifier.STATIC + Modifier.PUBLIC  , String.class);
 
@@ -56,7 +55,7 @@ public class ItemList {
 
     }
 
-    @Deprecated
+    @Deprecated //simply not working
     public Object get(String ID) throws InvocationTargetException, IllegalAccessException {
         if (list != null)
             return Array.get(list, Integer.parseInt(ID));

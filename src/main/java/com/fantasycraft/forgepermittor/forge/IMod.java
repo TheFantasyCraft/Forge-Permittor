@@ -2,6 +2,7 @@ package com.fantasycraft.forgepermittor.forge;
 
 import lombok.Getter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,24 +11,40 @@ import java.util.List;
 public abstract class IMod {
 
     @Getter
-    private List<Class> BlockInterfaces;
+    private List<Class> ContainerInterfaces = new LinkedList<Class>();
     @Getter
-    private List<Class> ItemInterFaces;
+    private List<Class> ItemInterFaces = new LinkedList<Class>();
     @Getter
-    private List<Class> ConnectablesInterfaces;
+    private List<Class> ConnectablesInterfaces = new LinkedList<Class>();
+    @Getter
+    private List<Class> ItemBlockContainerInterfaces = new LinkedList<Class>();
 
-    protected void addBlockInterface(Class interfaceClass){
-        getBlockInterfaces().add(interfaceClass);
+    protected void addContainerInterface(String interfaceClass) {
+        try {
+            this.getContainerInterfaces().add(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {}
     }
 
-    protected void addItemInterFaces(Class interfaceClass){
-        getItemInterFaces().add(interfaceClass);
+    @Deprecated
+    protected void addItemInterFace(String interfaceClass) {
+        try {
+            getItemInterFaces().add(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {}
     }
 
-    protected void addConnectablesInterfaces(Class interfaceClass){
-        getConnectablesInterfaces().add(interfaceClass);
+    protected void addConnectablesInterface(String interfaceClass)  {
+        try {
+            getConnectablesInterfaces().add(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {}
+    }
+
+    protected void addItemBlockContainerInterface(String interfaceClass)  {
+        try {
+            this.getItemBlockContainerInterfaces().add(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {}
     }
 
     public abstract String getName();
+
 
 }

@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.nms.Handlers;
+package com.fantasycraft.forgepermittor.nms.handlers;
 
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
@@ -23,19 +23,27 @@ public class CraftWorldHandler {
     }
 
     public boolean HasTileEntity(World world, int x, int y, int z){
+      return  getTileEntityAt(world,x,y,z) != null;
+    }
+
+    public boolean HasTileEntity(Block block){
+        return this.HasTileEntity(block.getWorld(), block.getX(), block.getY(), block.getZ());
+    }
+
+    public Object getTileEntityAt(World world, int x, int y, int z){
         Object craftworld = nmsResolver.getCraftWorld().cast(world);
         try {
-            return null != method.invoke(craftworld, x, y, z);
+            return method.invoke(craftworld, x, y, z);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
-    public boolean HasTileEntity(Block block){
-        return this.HasTileEntity(block.getWorld(), block.getX(), block.getY(), block.getZ());
+    public Object getTileEntityFrom(Block block){
+        return this.getTileEntityAt(block.getWorld(), block.getX(), block.getY(), block.getZ());
     }
 
 

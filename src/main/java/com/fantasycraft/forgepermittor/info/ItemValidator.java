@@ -1,8 +1,8 @@
-package com.fantasycraft.forgepermittor.nms;
+package com.fantasycraft.forgepermittor.info;
 
 import com.fantasycraft.forgepermittor.ForgePermittor;
-import com.fantasycraft.forgepermittor.info.BlockInfo;
-import com.fantasycraft.forgepermittor.info.ItemType;
+import com.fantasycraft.forgepermittor.forge.ModInformationManager;
+import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -17,9 +17,12 @@ public class ItemValidator {
 
     @Getter
     private NMSResolver nmsResolver;
+    @Getter
+    ModInformationManager modInformationManager;
 
     public ItemValidator(NMSResolver nmsResolver){
         this.nmsResolver = nmsResolver;
+        this.modInformationManager = new ModInformationManager(getNmsResolver());
     }
 
     public ItemType CheckItem(ItemStack stack) throws InvocationTargetException, IllegalAccessException {
@@ -47,30 +50,34 @@ public class ItemValidator {
     public BlockInfo CheckBlock(Block block) throws InvocationTargetException, IllegalAccessException {
         if (block.getTypeId() < 4096) {
             Object object = nmsResolver.getBlockList().get(block.getTypeId());
+
             ForgePermittor.log(object.toString(), true);
-            if (nmsResolver.getBlockContainer().isInstance(object))
-                return BlockInfo.Container;
-            if (nmsResolver.getBlock().isInstance(object)){
-                if (nmsResolver.getCraftWorldHandler().HasTileEntity(block) )
-                    return BlockInfo.Container;
-                else
+            if (nmsResolver.getBlockContainer().isInstance(object) || nmsResolver.getCraftWorldHandler().HasTileEntity(block)
+                    || getModInformationManager().HasContainerInterface(object.getClass()))
+                return CheckConnectable(block);
+            if (nmsResolver.getBlock().isInstance(object))
                     return BlockInfo.Block;
-            }
+
 
         }
         return BlockInfo.Unknown;
     }
 
+    private BlockInfo CheckConnectable(Block block){
+        if (!getModInformationManager().IsConnectable(block))
+            return BlockInfo.Container;
+        else
+            return BlockInfo.Connectable;
+    }
+
     private ItemType CheckItem(Object item , int ItemID, byte meta) throws InvocationTargetException, IllegalAccessException {
         if (ItemID < nmsResolver.getBlockList().getLength()) {
             Object object = nmsResolver.getItemBlockHandler().getBlock(item);
-            if (nmsResolver.getBlockContainer().isInstance(object))
+            if (nmsResolver.getBlockContainer().isInstance(object) || getModInformationManager().HasItemBlockContainerInterface(item.getClass())
+                    || nmsResolver.getBlockHandler().IsContainer(object, meta) )
                 return ItemType.Container;
             else if (nmsResolver.getBlock().isInstance(object)){
-                if (nmsResolver.getBlockHandler().IsContainer(object, meta))
-                    return ItemType.Container;
-                else
-                    return ItemType.Block;
+                return ItemType.Block;
             }
         }
         return ItemType.Unknown;

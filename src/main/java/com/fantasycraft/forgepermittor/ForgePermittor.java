@@ -1,7 +1,7 @@
 package com.fantasycraft.forgepermittor;
 
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
-import com.fantasycraft.forgepermittor.nms.ItemValidator;
+import com.fantasycraft.forgepermittor.info.ItemValidator;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +17,7 @@ public class ForgePermittor extends JavaPlugin {
     private NMSResolver nmsResolver;
     @Getter
     private ItemValidator itemValidator;
+
 
     private static boolean debug = true;
 
