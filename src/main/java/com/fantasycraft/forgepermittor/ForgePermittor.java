@@ -1,8 +1,11 @@
 package com.fantasycraft.forgepermittor;
 
-import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.info.ItemValidator;
+import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
+import com.fantasycraft.forgepermittor.protection.Plugins.TownyPlugin;
+import com.fantasycraft.forgepermittor.protection.ProtectionManager;
+import com.palmergames.bukkit.towny.Towny;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +20,8 @@ public class ForgePermittor extends JavaPlugin {
     private NMSResolver nmsResolver;
     @Getter
     private ItemValidator itemValidator;
+    @Getter
+    private ProtectionManager protectionManager;
 
 
     private static boolean debug = true;
@@ -38,7 +43,7 @@ public class ForgePermittor extends JavaPlugin {
         try {
             this.nmsResolver = new NMSResolver();
         } catch (Exception e) {
-            log("Failed to get nms values this plugin will now disable", false);
+            log("Failed to get nms values this protection will now disable", false);
             e.printStackTrace();
             setEnabled(false);
             return;
@@ -55,6 +60,19 @@ public class ForgePermittor extends JavaPlugin {
         this.itemValidator = new ItemValidator(getNmsResolver());
 
         this.getServer().getPluginManager().registerEvents( new ProtectionListener(), this );
+
+    }
+
+
+    private void RegisterPlugins(){
+
+        Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
+        if (towny != null)
+            getProtectionManager().RegisterPlugin(new TownyPlugin(towny));
+
+
+
+
 
     }
 }

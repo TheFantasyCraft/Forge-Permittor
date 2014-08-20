@@ -1,3 +1,4 @@
 name: Forge Permittor
 main: com.fantasycraft.forgepermittor.ForgePermittor
 version: 0.1-SNAPSHOT
+softdepend: [Towny, WorldGuard, LWC, Factions, Griefpervention]

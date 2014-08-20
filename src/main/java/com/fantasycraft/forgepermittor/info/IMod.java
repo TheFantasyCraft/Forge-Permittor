@@ -28,6 +28,7 @@ public abstract class IMod {
     private List<Class> ItemBlockInterfaces = new LinkedList<Class>();
 
 
+
     protected void addContainerInterface(String interfaceClass) {
         try {
             this.addContainerInterface(Class.forName(interfaceClass));
@@ -61,9 +62,7 @@ public abstract class IMod {
     protected void addItemBlockContainerInterface(String interfaceClass)  {
         try {
             this.addItemBlockContainerInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {}
     }
 
     protected void addItemBlockContainerInterface(Class interfaceClass)  {
@@ -74,9 +73,7 @@ public abstract class IMod {
     protected void addBlockInterface(String interfaceClass)  {
         try {
             this.addBlockInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {}
     }
 
     protected void addBlockInterface(Class interfaceClass)  {
@@ -86,9 +83,7 @@ public abstract class IMod {
     protected void addFoodInterface(String interfaceClass)  {
         try {
             this.addFoodInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {}
     }
 
     protected void addFoodInterface(Class interfaceClass)  {
@@ -98,9 +93,7 @@ public abstract class IMod {
     protected void addSwordInterface(String interfaceClass) {
         try {
             this.addSwordInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {}
     }
 
     protected void addSwordInterface(Class interfaceClass) {
@@ -110,9 +103,7 @@ public abstract class IMod {
     protected void addItemBlockInterface(String interfaceClass) {
         try {
             this.addSwordInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (ClassNotFoundException e) {}
     }
 
     protected void addItemBlockInterface(Class interfaceClass) {

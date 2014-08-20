@@ -1,6 +1,9 @@
 package com.fantasycraft.forgepermittor.protection;
 
+import com.fantasycraft.forgepermittor.info.types.BlockType;
+import com.fantasycraft.forgepermittor.info.types.ItemType;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 /**
@@ -8,6 +11,8 @@ import org.bukkit.entity.Player;
  */
 public interface IprotectionPlugin {
 
-    public boolean HasAcces(Player player, Location location);
+    public boolean CanUseBlock(Player player, Block block, BlockType type);
+
+    public boolean CanUseItem(Player player, Location location, ItemType type);
 
 }

@@ -22,7 +22,6 @@ public class InformationManager {
 
         RegisterMod(new Vanilla(nmsResolver));
         RegisterMod(new BuildCraft());
-
     }
 
     public void RegisterMod(IMod mod){
@@ -137,7 +136,7 @@ public class InformationManager {
     }
 
     public boolean HasItemBlockInterface(Object OtherClass) {
-        return HasItemInterface(OtherClass.getClass());
+        return HasItemBlockInterface(OtherClass.getClass());
     }
 
     public boolean HasItemBlockInterface(Class OtherClass){
