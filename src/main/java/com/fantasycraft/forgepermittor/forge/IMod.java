@@ -15,36 +15,110 @@ public abstract class IMod {
     @Getter
     private List<Class> ItemInterFaces = new LinkedList<Class>();
     @Getter
+    private List<Class> BlockInterfaces = new LinkedList<Class>();
+    @Getter
     private List<Class> ConnectablesInterfaces = new LinkedList<Class>();
     @Getter
     private List<Class> ItemBlockContainerInterfaces = new LinkedList<Class>();
+    @Getter
+    private List<Class> FoodInterfaces = new LinkedList<Class>();
+    @Getter
+    private List<Class> SwordInterfaces = new LinkedList<Class>();
+    @Getter
+    private List<Class> ItemBlockInterfaces = new LinkedList<Class>();
+
 
     protected void addContainerInterface(String interfaceClass) {
         try {
-            this.getContainerInterfaces().add(Class.forName(interfaceClass));
+            this.addContainerInterface(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
     }
 
-    @Deprecated
+    protected void addContainerInterface(Class interfaceClass) {
+            this.getContainerInterfaces().add(interfaceClass);
+    }
+
     protected void addItemInterFace(String interfaceClass) {
         try {
-            getItemInterFaces().add(Class.forName(interfaceClass));
+            addItemInterFace(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
+    }
+
+    protected void addItemInterFace(Class interfaceClass) {
+            getItemInterFaces().add(interfaceClass);
     }
 
     protected void addConnectablesInterface(String interfaceClass)  {
         try {
-            getConnectablesInterfaces().add(Class.forName(interfaceClass));
+            addConnectablesInterface(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
+    }
+
+    protected void addConnectablesInterface(Class interfaceClass)  {
+            getConnectablesInterfaces().add(interfaceClass);
     }
 
     protected void addItemBlockContainerInterface(String interfaceClass)  {
         try {
-            this.getItemBlockContainerInterfaces().add(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {}
+            this.addItemBlockContainerInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void addItemBlockContainerInterface(Class interfaceClass)  {
+            this.getItemBlockContainerInterfaces().add(interfaceClass);
+    }
+
+
+    protected void addBlockInterface(String interfaceClass)  {
+        try {
+            this.addBlockInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void addBlockInterface(Class interfaceClass)  {
+        this.getBlockInterfaces().add(interfaceClass);
+    }
+
+    protected void addFoodInterface(String interfaceClass)  {
+        try {
+            this.addFoodInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void addFoodInterface(Class interfaceClass)  {
+        this.getFoodInterfaces().add(interfaceClass);
+    }
+
+    protected void addSwordInterface(String interfaceClass) {
+        try {
+            this.addSwordInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void addSwordInterface(Class interfaceClass) {
+        this.getSwordInterfaces().add(interfaceClass);
+    }
+
+    protected void addItemBlockInterface(String interfaceClass) {
+        try {
+            this.addSwordInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void addItemBlockInterface(Class interfaceClass) {
+        this.getItemBlockInterfaces().add(interfaceClass);
     }
 
     public abstract String getName();
-
 
 }

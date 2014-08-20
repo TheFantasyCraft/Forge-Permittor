@@ -7,12 +7,10 @@ import com.fantasycraft.forgepermittor.forge.IMod;
  */
 public class BuildCraft extends IMod {
     public BuildCraft(){
-        addContainerInterface("buildcraft.core.ItemBlockBuildCraft");
 
+        //Connectables can be Items Or Blocks
         addConnectablesInterface("buildcraft.api.transport.IPipeConnection");
-
-        addItemBlockContainerInterface("buildcraft.core.IItemPipe");
-
+        addConnectablesInterface("buildcraft.core.IItemPipe");
     }
 
     @Override
