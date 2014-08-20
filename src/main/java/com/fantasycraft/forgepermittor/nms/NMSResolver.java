@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -47,7 +48,7 @@ public class NMSResolver {
     @Getter
     private String craftbukkit;
 
-    public NMSResolver() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException {
+    public NMSResolver() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         this.craftbukkit = findCraftBukkit();
         this.CraftItemStack = Class.forName(getCraftbukkit() + ".inventory.CraftItemStack");
         this.CraftOfflinePlayer = Class.forName(getCraftbukkit() + ".CraftOfflinePlayer");
@@ -60,14 +61,15 @@ public class NMSResolver {
         for (Constructor c : this.getItemStack().getConstructors()) {
             if (c.getParameterTypes().length == 1 && !c.getParameterTypes()[0].isPrimitive()) {
                 ItemList list = new ItemList(c.getParameterTypes()[0]);
-                System.out.println(list.getLength() + " " + c.getParameterTypes()[0].getName());
-                if (list.getLength() == 4096){
+                if (list.get(0) != null || list.getLength() == 4096){
                     Block = c.getParameterTypes()[0];
                     this.BlockList = list;
                 }else{
                     Item = c.getParameterTypes()[0];
                     this.ItemList = list;
                 }
+                if (Block != null && Item != null)
+                    break;
             }
         }
 
@@ -82,6 +84,8 @@ public class NMSResolver {
         this.craftItemStackHandler = new CraftItemStackHandler(this);
         this.itemBlockHandler = new ItemBlockHandler(this);
 
+        System.out.println(getItemList().get(1));
+        System.out.println(getBlockList().get(1));
     }
 
     private String findCraftBukkit(){

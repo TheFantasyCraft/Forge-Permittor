@@ -1,9 +1,9 @@
 package com.fantasycraft.forgepermittor.nms;
 
+import com.fantasycraft.forgepermittor.nms.util.Util;
 import lombok.Getter;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
+import java.lang.reflect.*;
 
 /**
  * Created by thomas on 8/17/2014.
@@ -14,30 +14,54 @@ public class ItemList {
 
     @Getter
     private Class ItemClass;
+
+    //1.6.4 and lower
     private Object list;
 
-    public ItemList(Class ItemClass){
+    //1.7.2 and higher
+    private Method GetBlock;
+    private Method GetBlockString;
+
+    @Getter
+    private int Length;
+
+    public ItemList(Class ItemClass) throws IllegalAccessException {
         this.ItemClass = ItemClass;
-        this.list =  findlist();
+        findlist();
     }
 
-    private Object findlist(){
-        try {
-            for (Field field : this.getItemClass().getFields()) {
-                if (field.getType().isArray())
-                    return field.get(null);
+    private void findlist() throws IllegalAccessException {
+        for (Field field : this.getItemClass().getFields()) {
+            if (field.getType().isArray() && field.getType().getComponentType().isAssignableFrom(getItemClass())) {
+                this.list = field.get(null);
+                this.Length = Array.getLength(list);
+                return;
             }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
-        return null;
+
+        System.out.println("This looks like 1.7.X lets try something hacky to solve this :)!");
+
+        this.GetBlock = Util.getMethode(getItemClass(), getItemClass(), Modifier.STATIC + Modifier.PUBLIC , int.class);
+        this.GetBlockString = Util.getMethode(getItemClass(), getItemClass(), Modifier.STATIC + Modifier.PUBLIC  , String.class);
+
+        Length = Integer.MAX_VALUE;
+
     }
 
-    public Object get(int ID){
-        return Array.get(list, ID);
+    public Object get(int ID) throws InvocationTargetException, IllegalAccessException {
+        if (list != null)
+            return Array.get(list, ID);
+        else
+            return GetBlock.invoke(null, ID);
+
     }
 
-    public int getLength() {
-        return Array.getLength(list);
+    @Deprecated
+    public Object get(String ID) throws InvocationTargetException, IllegalAccessException {
+        if (list != null)
+            return Array.get(list, Integer.parseInt(ID));
+        else
+            return GetBlockString.invoke(null, ID);
+
     }
 }

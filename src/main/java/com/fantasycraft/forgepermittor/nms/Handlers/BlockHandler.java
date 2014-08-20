@@ -28,11 +28,11 @@ public class BlockHandler {
         }
     }
 
-    public boolean IsContainer(Object object,int ID,  byte meta){
+    public boolean IsContainer(Object object, byte meta) throws InvocationTargetException, IllegalAccessException {
         if (HasTileEntity == null) {
             //Smells like an OutDated Forge or Craftbukkit Server, Its good that i have the brains to figure out another way to get this!!
             System.out.println("Smells like Bukkit");
-            return Util.ClassHasmethodeWithReturnType(nmsResolver.getBlockList().get(ID).getClass(), nmsResolver.getTileEntity());
+            return Util.ClassHasmethodeWithReturnType(object.getClass(), nmsResolver.getTileEntity());
         }
         System.out.println("Oh lord Forge <3!");
         try {

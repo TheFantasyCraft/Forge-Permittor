@@ -1,10 +1,13 @@
 package com.fantasycraft.forgepermittor.nms;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.BlockInfo;
 import com.fantasycraft.forgepermittor.info.ItemType;
 import lombok.Getter;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by thomas on 8/17/2014.
@@ -19,11 +22,11 @@ public class ItemValidator {
         this.nmsResolver = nmsResolver;
     }
 
-    public ItemType CheckItem(ItemStack stack) {
+    public ItemType CheckItem(ItemStack stack) throws InvocationTargetException, IllegalAccessException {
         int ItemID = stack.getTypeId();
         byte meta = stack.getData().getData();
-
         Object item = nmsResolver.getItemList().get(ItemID);
+        ForgePermittor.log(item.toString(), true);
         if (item != null) {
             if (nmsResolver.getItemFood().isInstance(item))
                 return ItemType.Food;
@@ -41,9 +44,10 @@ public class ItemValidator {
     }
 
 
-    public BlockInfo CheckBlock(Block block){
+    public BlockInfo CheckBlock(Block block) throws InvocationTargetException, IllegalAccessException {
         if (block.getTypeId() < 4096) {
             Object object = nmsResolver.getBlockList().get(block.getTypeId());
+            ForgePermittor.log(object.toString(), true);
             if (nmsResolver.getBlockContainer().isInstance(object))
                 return BlockInfo.Container;
             if (nmsResolver.getBlock().isInstance(object)){
@@ -57,14 +61,13 @@ public class ItemValidator {
         return BlockInfo.Unknown;
     }
 
-    private ItemType CheckItem(Object item , int ItemID, byte meta){
+    private ItemType CheckItem(Object item , int ItemID, byte meta) throws InvocationTargetException, IllegalAccessException {
         if (ItemID < nmsResolver.getBlockList().getLength()) {
-            int ID = nmsResolver.getItemBlockHandler().getBlockID(item);
-            Object object = nmsResolver.getBlockList().get(ID);
+            Object object = nmsResolver.getItemBlockHandler().getBlock(item);
             if (nmsResolver.getBlockContainer().isInstance(object))
                 return ItemType.Container;
             else if (nmsResolver.getBlock().isInstance(object)){
-                if (nmsResolver.getBlockHandler().IsContainer(object, ID , meta))
+                if (nmsResolver.getBlockHandler().IsContainer(object, meta))
                     return ItemType.Container;
                 else
                     return ItemType.Block;

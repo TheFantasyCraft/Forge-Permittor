@@ -1,10 +1,12 @@
 package com.fantasycraft.forgepermittor.nms.Handlers;
 
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
+import com.fantasycraft.forgepermittor.nms.util.Util;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * Created by thomas on 8/17/2014.
@@ -25,6 +27,17 @@ public class ItemBlockHandler {
                 break;
             }
         }
+    }
+
+    public Object getBlock(Object Item) throws InvocationTargetException, IllegalAccessException {
+        int ID = getBlockID(Item);
+        if (ID != -1)
+            return getNmsResolver().getBlockList().get(ID);
+        else {
+            Class block = getNmsResolver().getBlock();
+            Method method = Util.getMethode(block, block, Modifier.STATIC + Modifier.PUBLIC, getNmsResolver().getItem());
+            return method.invoke(null, Item);
+        }
 
     }
 
@@ -32,11 +45,8 @@ public class ItemBlockHandler {
         try {
             return (Integer) method.invoke(object);
         }
-         catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        catch (Exception e) {
+            return -1;
         }
-        return -1;
     }
 }
