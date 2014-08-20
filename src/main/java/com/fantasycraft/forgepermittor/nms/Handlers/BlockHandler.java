@@ -24,17 +24,17 @@ public class BlockHandler {
         try {
             HasTileEntity =  getNmsResolver().getBlock().getMethod("hasTileEntity", int.class);
         } catch (NoSuchMethodException e) {
-            ForgePermittor.log("Outdated Forge ( or updated Bukkit xD ) !! Using Other methode to find Container Block on Items", false);
+            ForgePermittor.log("Outdated forge ( or updated Bukkit xD ) !! Using Other methode to find Container Block on Items", false);
         }
     }
 
     public boolean IsContainer(Object object, byte meta) throws InvocationTargetException, IllegalAccessException {
         if (HasTileEntity == null) {
-            //Smells like an OutDated Forge or Craftbukkit Server, Its good that i have the brains to figure out another way to get this!!
+            //Smells like an OutDated forge or Craftbukkit Server, Its good that i have the brains to figure out another way to get this!!
             System.out.println("Smells like Bukkit");
             return Util.ClassHasmethodeWithReturnType(object.getClass(), nmsResolver.getTileEntity());
         }
-        System.out.println("Oh lord Forge <3!");
+        System.out.println("Oh lord forge <3!");
         try {
             return (Boolean) HasTileEntity.invoke(object, (int) meta );
         } catch (IllegalAccessException e) {

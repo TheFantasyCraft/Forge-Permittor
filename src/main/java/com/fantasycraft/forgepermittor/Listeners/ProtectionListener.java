@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.Listeners;
+package com.fantasycraft.forgepermittor.listeners;
 
 import com.fantasycraft.forgepermittor.ForgePermittor;
 import org.bukkit.event.EventHandler;
@@ -12,11 +12,17 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event){
-        if (event.hasItem()){
-            ForgePermittor.log("ItemType: " + ForgePermittor.getInstance().getItemValidator().CheckItem(event.getItem()).toString(), true);
+        try {
+            if (event.hasItem()){
+                ForgePermittor.log("ItemType: " + ForgePermittor.getInstance().getItemValidator().CheckItem(event.getItem()).toString(), true);
+            }
+            if (event.hasBlock())
+                ForgePermittor.log("BlockType: " +ForgePermittor.getInstance().getItemValidator().CheckBlock(event.getClickedBlock()).toString(), true);
         }
-        if (event.hasBlock())
-            ForgePermittor.log("BlockType: " +ForgePermittor.getInstance().getItemValidator().CheckBlock(event.getClickedBlock()).toString(), true);
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

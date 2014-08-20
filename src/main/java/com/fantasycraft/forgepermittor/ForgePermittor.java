@@ -1,6 +1,6 @@
 package com.fantasycraft.forgepermittor;
 
-import com.fantasycraft.forgepermittor.Listeners.ProtectionListener;
+import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.ItemValidator;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
