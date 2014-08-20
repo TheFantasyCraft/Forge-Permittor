@@ -19,6 +19,7 @@ public class NMSResolver {
     private Class CraftItemStack;
     private Class CraftOfflinePlayer;
     private Class CraftWorld;
+    private Class CraftInventory;
     //nms
     private Class ItemStack;
     private Class NBTTagCompound;
@@ -29,6 +30,7 @@ public class NMSResolver {
     private Class ItemFood;
     private Class ItemBlock;
     private Class TileEntity;
+    private Class IInventory;
 
 
     private ItemList BlockList;
@@ -50,9 +52,11 @@ public class NMSResolver {
         this.CraftItemStack = Class.forName(getCraftbukkit() + ".inventory.CraftItemStack");
         this.CraftOfflinePlayer = Class.forName(getCraftbukkit() + ".CraftOfflinePlayer");
         this.CraftWorld = Class.forName(getCraftbukkit() + ".CraftWorld");
+        this.CraftInventory = Class.forName(getCraftbukkit() + ".inventory.CraftInventory");
 
         this.NBTTagCompound = getPrivatemethode("getData", getCraftOfflinePlayer()).getReturnType();
         this.ItemStack = FindConstructorSingleParameter(this.getCraftItemStack());
+        this.IInventory = CraftInventory.getMethod("getInventory").getReturnType();
         this.TileEntity = getCraftWorld().getMethod("getTileEntityAt", int.class, int.class, int.class).getReturnType();
 
         for (Constructor c : this.getItemStack().getConstructors()) {

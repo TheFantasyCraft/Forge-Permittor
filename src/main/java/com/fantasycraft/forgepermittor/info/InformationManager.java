@@ -1,10 +1,9 @@
-package com.fantasycraft.forgepermittor.forge;
+package com.fantasycraft.forgepermittor.info;
 
-import com.fantasycraft.forgepermittor.forge.mods.BuildCraft;
-import com.fantasycraft.forgepermittor.forge.mods.Vanilla;
+import com.fantasycraft.forgepermittor.info.mods.BuildCraft;
+import com.fantasycraft.forgepermittor.info.mods.Vanilla;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Data;
-import org.bukkit.block.Block;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class InformationManager {
         Mods.add(mod);
     }
 
-    public Boolean IsConnectable(Block block){
+  /*  public Boolean IsConnectable(Block block){
         Object tile = nmsResolver.getCraftWorldHandler().getTileEntityFrom(block);
         if (HasConnectableInferface(tile))
             return true;
@@ -50,6 +49,8 @@ public class InformationManager {
         }
         return false;
     }
+
+    */
 
     public boolean HasItemBlockContainerInterface(Object OtherClass){
         return HasItemBlockContainerInterface(OtherClass.getClass());
@@ -108,8 +109,9 @@ public class InformationManager {
     }
 
     public boolean HasContainerInterface(Object OtherClass){
-        return HasConnectableInferface(OtherClass.getClass());
+        return HasContainerInterface(OtherClass.getClass());
     }
+
     public boolean HasContainerInterface(Class OtherClass){
         for (IMod mod : Mods){
             for (Class in : mod.getContainerInterfaces()) {
@@ -147,6 +149,4 @@ public class InformationManager {
         }
         return false;
     }
-
-
 }

@@ -1,6 +1,6 @@
-package com.fantasycraft.forgepermittor.forge.mods;
+package com.fantasycraft.forgepermittor.info.mods;
 
-import com.fantasycraft.forgepermittor.forge.IMod;
+import com.fantasycraft.forgepermittor.info.IMod;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 
 /**
@@ -12,6 +12,9 @@ public class Vanilla extends IMod {
         //Blocks
         addBlockInterface(nmsResolver.getBlock());
         addContainerInterface(nmsResolver.getBlockContainer());
+
+        //If we just block Connectables from being placed to containers
+        //addConnectablesInterface(nmsResolver.getIInventory());
 
         //Items
         addItemInterFace(nmsResolver.getItem());

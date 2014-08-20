@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.forge;
+package com.fantasycraft.forgepermittor.info;
 
 import lombok.Getter;
 
@@ -16,8 +16,8 @@ public abstract class IMod {
     private List<Class> ItemInterFaces = new LinkedList<Class>();
     @Getter
     private List<Class> BlockInterfaces = new LinkedList<Class>();
-    @Getter
-    private List<Class> ConnectablesInterfaces = new LinkedList<Class>();
+    /*@Getter
+    private List<Class> ConnectablesInterfaces = new LinkedList<Class>();*/
     @Getter
     private List<Class> ItemBlockContainerInterfaces = new LinkedList<Class>();
     @Getter
@@ -48,7 +48,7 @@ public abstract class IMod {
             getItemInterFaces().add(interfaceClass);
     }
 
-    protected void addConnectablesInterface(String interfaceClass)  {
+   /* protected void addConnectablesInterface(String interfaceClass)  {
         try {
             addConnectablesInterface(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
@@ -56,7 +56,7 @@ public abstract class IMod {
 
     protected void addConnectablesInterface(Class interfaceClass)  {
             getConnectablesInterfaces().add(interfaceClass);
-    }
+    }*/
 
     protected void addItemBlockContainerInterface(String interfaceClass)  {
         try {

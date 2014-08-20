@@ -51,6 +51,7 @@ public class ForgePermittor extends JavaPlugin {
         log("ItemSword: " + getNmsResolver().getItemSword().getName(), true);
         log("ItemBlock: " + getNmsResolver().getItemBlock().getName(), true);
         log("NBTTagCompound: " + getNmsResolver().getNBTTagCompound().getName(), true);
+        log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
         this.itemValidator = new ItemValidator(getNmsResolver());
 
         this.getServer().getPluginManager().registerEvents( new ProtectionListener(), this );

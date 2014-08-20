@@ -1,7 +1,9 @@
 package com.fantasycraft.forgepermittor.info;
 
 import com.fantasycraft.forgepermittor.ForgePermittor;
-import com.fantasycraft.forgepermittor.forge.InformationManager;
+import com.fantasycraft.forgepermittor.info.InformationManager;
+import com.fantasycraft.forgepermittor.info.types.BlockType;
+import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Getter;
 import org.bukkit.block.Block;
@@ -31,8 +33,8 @@ public class ItemValidator {
         Object item = nmsResolver.getItemList().get(ItemID);
         ForgePermittor.log(item.toString(), true);
         if (item != null) {
-            if (this.getInformationManager().HasConnectableInferface(item))
-                return ItemType.Connectable;
+          /*  if (this.getInformationManager().HasConnectableInferface(item))
+                return ItemType.Connectable;*/
             if (this.getInformationManager().HasItemBlockContainerInterface(item))
                 return ItemType.Container;
             if (this.getInformationManager().HasFoodInterface(item))
@@ -51,26 +53,27 @@ public class ItemValidator {
     }
 
 
-    public BlockInfo CheckBlock(Block block) throws InvocationTargetException, IllegalAccessException {
+    public BlockType CheckBlock(Block block) throws InvocationTargetException, IllegalAccessException {
         if (block.getTypeId() < 4096) {
             Object object = nmsResolver.getBlockList().get(block.getTypeId());
             ForgePermittor.log(object.toString(), true);
             if ( this.getInformationManager().HasContainerInterface(object) ||nmsResolver.getCraftWorldHandler().HasTileEntity(block))
-                return CheckConnectable(block);
+                return BlockType.Container; //CheckConnectable(block);
             if (this.getInformationManager().HasBlockInterface(object))
-                    return BlockInfo.Block;
+                    return BlockType.Block;
 
 
         }
-        return BlockInfo.Unknown;
+        return BlockType.Unknown;
     }
 
-    private BlockInfo CheckConnectable(Block block){
-        if (!this.getInformationManager().IsConnectable(block))
-            return BlockInfo.Container;
-        else
+  /*  private BlockInfo CheckConnectable(Block block){
+        if (this.getInformationManager().IsConnectable(block))
             return BlockInfo.Connectable;
-    }
+        else
+            return BlockInfo.Container;
+
+    }*/
 
     private ItemType CheckItemBlock(Object item, int ItemID, byte meta) throws InvocationTargetException, IllegalAccessException {
         if (ItemID < nmsResolver.getBlockList().getLength()) {

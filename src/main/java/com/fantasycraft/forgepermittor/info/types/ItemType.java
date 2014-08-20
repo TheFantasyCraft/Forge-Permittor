@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.info;
+package com.fantasycraft.forgepermittor.info.types;
 
 /**
  * Created by thomas on 8/17/2014.
