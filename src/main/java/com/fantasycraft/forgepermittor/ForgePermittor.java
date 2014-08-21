@@ -29,7 +29,7 @@ public class ForgePermittor extends JavaPlugin {
     public static void log(String string, boolean isdebug){
         if (debug && isdebug)
             getInstance().getLogger().info("[DEBUG] " + string);
-        if (!debug)
+        if (!isdebug)
             getInstance().getLogger().info(string);
     }
 
@@ -67,8 +67,10 @@ public class ForgePermittor extends JavaPlugin {
     private void RegisterPlugins(){
 
         Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
-        if (towny != null)
+        if (towny != null) {
+            log("Towny Registered!", false);
             getProtectionManager().RegisterPlugin(new TownyPlugin(towny));
+        }
 
 
 
