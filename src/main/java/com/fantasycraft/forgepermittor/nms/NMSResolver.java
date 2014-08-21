@@ -3,6 +3,7 @@ package com.fantasycraft.forgepermittor.nms;
 import com.fantasycraft.forgepermittor.nms.handlers.*;
 import lombok.Data;
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Constructor;
@@ -74,10 +75,10 @@ public class NMSResolver {
             }
         }
 
-        this.BlockContainer = getBlockList().get(54).getClass().getSuperclass();
-        this.ItemSword = getItemList().get(267).getClass();
-        this.ItemFood = getItemList().get(319).getClass();
-        this.ItemBlock = getItemList().get(106).getClass().getSuperclass();
+        this.BlockContainer = getBlockList().get(Material.CHEST.getId()).getClass().getSuperclass();
+        this.ItemSword = getItemList().get(Material.IRON_SWORD.getId()).getClass();
+        this.ItemFood = getItemList().get(Material.PORK.getId()).getClass();
+        this.ItemBlock = getItemList().get(Material.VINE.getId()).getClass().getSuperclass();
 
         this.blockHandler = new BlockHandler(this);
         this.craftWorldHandler = new CraftWorldHandler(this);
