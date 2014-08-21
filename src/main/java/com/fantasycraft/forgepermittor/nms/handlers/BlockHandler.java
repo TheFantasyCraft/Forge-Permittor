@@ -37,11 +37,9 @@ public class BlockHandler {
         System.out.println("Oh lord forge <3!");
         try {
             return (Boolean) HasTileEntity.invoke(object, (int) meta );
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            ForgePermittor.log(e.toString(), true);
+            return false;
         }
-        return true;
     }
 }

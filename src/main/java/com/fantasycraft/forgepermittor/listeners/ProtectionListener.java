@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
@@ -32,6 +33,8 @@ public class ProtectionListener implements Listener {
                 if (!getProtectionManager().CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), getValidator().CheckItem(event.getItem())))
                 {
                     event.setUseItemInHand(Event.Result.DENY);
+                    event.setUseInteractedBlock(Event.Result.DENY);
+                    return;
                 }
             }
             if (event.hasBlock() &&  event.useInteractedBlock() != Event.Result.DENY) {
@@ -45,6 +48,11 @@ public class ProtectionListener implements Listener {
             e.printStackTrace();
         }
 
+    }
+
+    @EventHandler
+    public void onBlockPlaceEvent(BlockPlaceEvent event){
+        ForgePermittor.log(event.getBlock().toString(), true);
     }
 
 }

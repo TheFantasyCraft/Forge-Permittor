@@ -36,7 +36,10 @@ public class ItemBlockHandler {
         else {
             Class block = getNmsResolver().getBlock();
             Method method = Util.getMethode(block, block, Modifier.STATIC + Modifier.PUBLIC, getNmsResolver().getItem());
-            return method.invoke(null, Item);
+            if (method != null)
+                return method.invoke(null, Item);
+            else
+                return Item;
         }
 
     }

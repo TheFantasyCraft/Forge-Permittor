@@ -1,7 +1,6 @@
 package com.fantasycraft.forgepermittor.info;
 
 import com.fantasycraft.forgepermittor.ForgePermittor;
-import com.fantasycraft.forgepermittor.info.InformationManager;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
@@ -84,6 +83,6 @@ public class ItemValidator {
                 return ItemType.Block;
             }
         }
-        return ItemType.Unknown;
+        return ItemType.Block;
     }
 }

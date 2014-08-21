@@ -1,4 +1,4 @@
-package com.fantasycraft.forgepermittor.protection.Plugins;
+package com.fantasycraft.forgepermittor.protection.plugins;
 
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;

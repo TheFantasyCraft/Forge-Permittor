@@ -35,7 +35,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Protection Plugins -->
+        <!-- Protection plugins -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
@@ -63,7 +63,7 @@
             <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
         </dependency>
 
-        <!-- Log Plugins -->
+        <!-- Log plugins -->
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>Coreprotect</artifactId>
@@ -72,7 +72,7 @@
             <systemPath>${basedir}/lib/CoreProtect_2.04.jar</systemPath>
         </dependency>
 
-        <!--Plugins that require some modifactions -->
+        <!--plugins that require some modifactions -->
         <dependency>
             <groupId>com.Acrobot</groupId>
             <artifactId>ChestShop</artifactId>

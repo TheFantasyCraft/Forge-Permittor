@@ -1,8 +1,10 @@
 package com.fantasycraft.forgepermittor.nms;
 
 import com.fantasycraft.forgepermittor.nms.handlers.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,6 +16,7 @@ import java.lang.reflect.Method;
  * Created by thomas on 8/16/2014.
  */
 @Data
+@Setter(AccessLevel.PRIVATE)
 public class NMSResolver {
 
     //craftbukkit
@@ -30,6 +33,7 @@ public class NMSResolver {
     private Class ItemSword;
     private Class ItemFood;
     private Class ItemBlock;
+    private Class ItemDoor;
     private Class TileEntity;
     private Class IInventory;
 
@@ -79,6 +83,7 @@ public class NMSResolver {
         this.ItemSword = getItemList().get(Material.IRON_SWORD.getId()).getClass();
         this.ItemFood = getItemList().get(Material.PORK.getId()).getClass();
         this.ItemBlock = getItemList().get(Material.VINE.getId()).getClass().getSuperclass();
+        this.ItemDoor = getItemList().get(Material.IRON_DOOR.getId()).getClass();
 
         this.blockHandler = new BlockHandler(this);
         this.craftWorldHandler = new CraftWorldHandler(this);

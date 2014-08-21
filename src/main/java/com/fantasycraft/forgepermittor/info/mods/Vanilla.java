@@ -18,7 +18,10 @@ public class Vanilla extends IMod {
 
         //Items
         addItemInterFace(nmsResolver.getItem());
+
         addItemBlockInterface(nmsResolver.getItemBlock());
+       // addItemBlockInterface(nmsResolver.getItemDoor());
+
         addSwordInterface(nmsResolver.getItemSword());
         addFoodInterface(nmsResolver.getItemFood());
     }
