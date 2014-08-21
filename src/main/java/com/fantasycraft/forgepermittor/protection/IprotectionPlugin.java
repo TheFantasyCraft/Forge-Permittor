@@ -15,4 +15,6 @@ public interface IprotectionPlugin {
 
     public boolean CanUseItem(Player player, Location location, ItemType type);
 
+    public void SendErrorMessage(Player player, MessageType type);
+
 }

@@ -3,6 +3,7 @@ package com.fantasycraft.forgepermittor.protection.Plugins;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
+import com.fantasycraft.forgepermittor.protection.MessageType;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -20,5 +21,10 @@ public class FactionsPlugin implements IprotectionPlugin {
     @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
         return false;
+    }
+
+    @Override
+    public void SendErrorMessage(Player player, MessageType type) {
+
     }
 }

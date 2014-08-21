@@ -4,8 +4,10 @@ import com.fantasycraft.forgepermittor.info.ItemValidator;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.Plugins.TownyPlugin;
+import com.fantasycraft.forgepermittor.protection.Plugins.WorldguardPlugin;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import com.palmergames.bukkit.towny.Towny;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -59,17 +61,27 @@ public class ForgePermittor extends JavaPlugin {
         log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
         this.itemValidator = new ItemValidator(getNmsResolver());
 
-        this.getServer().getPluginManager().registerEvents( new ProtectionListener(), this );
 
+        this.RegisterPlugins();
+
+        this.getServer().getPluginManager().registerEvents( new ProtectionListener(getProtectionManager(), getItemValidator()), this );
     }
 
 
     private void RegisterPlugins(){
 
+        this.protectionManager = new ProtectionManager();
+
         Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
         if (towny != null) {
             log("Towny Registered!", false);
             getProtectionManager().RegisterPlugin(new TownyPlugin(towny));
+        }
+
+        WorldGuardPlugin worldGuard = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("WorldGuard");
+        if (worldGuard != null) {
+            log("WorldGuard Registered!", false);
+            getProtectionManager().RegisterPlugin(new WorldguardPlugin(worldGuard));
         }
 
 
