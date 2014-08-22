@@ -43,9 +43,9 @@ public class ProtectionManager implements IprotectionPlugin {
     }
 
     @Override
-    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock) {
+    public boolean CanUseItem(Player player, Location location, ItemType type) {
         for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanUseItem(player, location, type, hasblock)) {
+            if (!p.CanUseItem(player, location, type)) {
                 p.SendErrorMessage(player, MessageType.UsageNotAllowed);
                 return false;
             }
@@ -67,4 +67,14 @@ public class ProtectionManager implements IprotectionPlugin {
     @Override
     @Deprecated //simply don't use
     public void SendErrorMessage(Player player, MessageType type) {}
+
+    @Override
+    public boolean CanDamage(Player player) {
+        for (IprotectionPlugin p : getPlugins()){
+            if (!p.CanDamage(player)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -19,7 +19,7 @@ public class LWCPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock) {
+    public boolean CanUseItem(Player player, Location location, ItemType type) {
         return false;
     }
 
@@ -31,5 +31,10 @@ public class LWCPlugin implements IprotectionPlugin {
     @Override
     public void SendErrorMessage(Player player, MessageType type) {
 
+    }
+
+    @Override
+    public boolean CanDamage(Player player) {
+        return false;
     }
 }

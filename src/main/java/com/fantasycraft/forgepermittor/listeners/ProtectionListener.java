@@ -14,6 +14,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
@@ -36,7 +37,7 @@ public class ProtectionListener implements Listener {
         try {
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
-                if (!getProtectionManager().CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), getValidator().CheckItem(event.getItem()), event.hasBlock() ))
+                if (!getProtectionManager().CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), getValidator().CheckItem(event.getItem())))
                 {
                     event.setUseItemInHand(Event.Result.DENY);
                     event.setUseInteractedBlock(Event.Result.DENY);
@@ -57,12 +58,17 @@ public class ProtectionListener implements Listener {
     }
 
     @EventHandler
+    public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
+    {
+        if ((event.getEntity() instanceof Player) && event.getDamager().getType().getName() == null && !getProtectionManager().CanDamage((Player) event.getEntity())) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent event){
         if (event.isCancelled())
             return;
-
-
-
         try {
 
             BlockType type = BlockType.Unknown;
@@ -77,7 +83,6 @@ public class ProtectionListener implements Listener {
                 ForgePermittor.log("tile: " + getValidator().CheckBlock(event.getBlock()), true);
                 type = getValidator().CheckBlock(event.getBlock());
             }
-
 
             if (type == BlockType.Container) {
                 if (CheckBlockPlaceforContainer(player, block.getRelative(BlockFace.NORTH))

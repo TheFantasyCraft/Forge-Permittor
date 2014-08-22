@@ -13,10 +13,12 @@ public interface IprotectionPlugin {
 
     public boolean CanUseBlock(Player player, Block block, BlockType type);
 
-    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock);
+    public boolean CanUseItem(Player player, Location location, ItemType type);
 
     public boolean CanBreakBlock(Player player, Block block);
 
     public void SendErrorMessage(Player player, MessageType type);
+
+    public boolean CanDamage(Player player);
 
 }

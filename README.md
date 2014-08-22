@@ -13,6 +13,9 @@ Feacture:
 - Items and AdvItems (Items with NBT) are automatically denied in protected areas
 - Players can't place containers next to containers they don't own. (Fixes stealing)
 
+Know Isues:
+- mmPowersuit PowerTools and Thaumcraft Wands can't be used as weapon in protected regions.
+
 Todo:
 - Add block BlackList For blocks that shouldn't be protected (Tradables)
 -
