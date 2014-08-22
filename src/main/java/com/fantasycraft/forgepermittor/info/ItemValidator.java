@@ -39,7 +39,7 @@ public class ItemValidator {
             if (this.getInformationManager().HasFoodInterface(item))
                 return ItemType.Food;
             if (this.getInformationManager().HasSwordInterface(item))
-                return ItemType.Sword;
+                return ItemType.Weapon;
             if (this.getInformationManager().HasItemBlockInterface(item))
                 return CheckItemBlock(item, ItemID, meta);
             if (this.getInformationManager().HasItemInterface(item)) {

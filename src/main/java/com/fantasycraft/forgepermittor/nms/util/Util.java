@@ -47,4 +47,14 @@ public class Util {
         }
         return false;
     }
+
+    public static String stackTraceToString(Throwable e) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(e.toString());
+        for (StackTraceElement element : e.getStackTrace()) {
+            sb.append(element.toString());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

@@ -1,10 +1,12 @@
 package com.fantasycraft.forgepermittor.protection.plugins;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -32,18 +34,29 @@ public class WorldguardPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public boolean CanUseItem(Player player, Location location, ItemType type) {
-        if (type == ItemType.Item || type == ItemType.AdvItem)
-            return getWorldGuard().canBuild(player, location);
-        else
+    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock) {
+        if (getWorldGuard().getRegionManager(location.getWorld()).getApplicableRegions(location).allows(DefaultFlag.PVP) && (!hasblock || type == ItemType.Weapon)) {
+            ForgePermittor.log("WG: PVP allowed", true);
             return true;
+        }
+        if (type == ItemType.Food || type ==  ItemType.Block || type == ItemType.Container)
+            return true;
+
+        return getWorldGuard().canBuild(player, location);
+    }
+
+    @Override
+    public boolean CanBreakBlock(Player player, Block block) {
+        return getWorldGuard().canBuild(player, block);
     }
 
     @Override
     public void SendErrorMessage(Player player, MessageType type) {
         if (type == MessageType.InteractNotAllowed)
-            player.sendMessage(ChatColor.RED + "You don't have permission to open that in this area.");
+            player.sendMessage(ChatColor.DARK_RED  + "You don't have permission to open that in this area.");
+        else if (type == MessageType.UsageNotAllowed)
+            player.sendMessage(ChatColor.DARK_RED + "You don't have permission for this area.");
         else
-            player.sendMessage(ChatColor.RED + "You don't have permission for this area.");
+            player.sendMessage(ChatColor.DARK_RED + "Your Container is to close, to someone else his Container.");
     }
 }

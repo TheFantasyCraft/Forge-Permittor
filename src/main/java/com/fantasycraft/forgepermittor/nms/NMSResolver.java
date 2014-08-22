@@ -36,6 +36,7 @@ public class NMSResolver {
     private Class ItemDoor;
     private Class TileEntity;
     private Class IInventory;
+    private Class ItemBow;
 
 
     private ItemList BlockList;
@@ -84,6 +85,7 @@ public class NMSResolver {
         this.ItemFood = getItemList().get(Material.PORK.getId()).getClass();
         this.ItemBlock = getItemList().get(Material.VINE.getId()).getClass().getSuperclass();
         this.ItemDoor = getItemList().get(Material.IRON_DOOR.getId()).getClass();
+        this.setItemBow(getItemList().get(Material.BOW.getId()).getClass());
 
         this.blockHandler = new BlockHandler(this);
         this.craftWorldHandler = new CraftWorldHandler(this);

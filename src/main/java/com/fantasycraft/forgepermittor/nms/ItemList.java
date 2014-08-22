@@ -1,5 +1,6 @@
 package com.fantasycraft.forgepermittor.nms;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.nms.util.Util;
 import lombok.Getter;
 
@@ -48,6 +49,7 @@ public class ItemList {
     }
 
     public Object get(int ID) throws InvocationTargetException, IllegalAccessException {
+        ForgePermittor.log("Requested ID: " + ID, true);
         if (list != null)
             return Array.get(list, ID);
         else

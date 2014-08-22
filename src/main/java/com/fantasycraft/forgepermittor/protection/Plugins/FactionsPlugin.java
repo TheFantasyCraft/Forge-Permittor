@@ -19,7 +19,12 @@ public class FactionsPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public boolean CanUseItem(Player player, Location location, ItemType type) {
+    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock) {
+        return false;
+    }
+
+    @Override
+    public boolean CanBreakBlock(Player player, Block block) {
         return false;
     }
 

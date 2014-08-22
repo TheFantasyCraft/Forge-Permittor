@@ -43,10 +43,21 @@ public class ProtectionManager implements IprotectionPlugin {
     }
 
     @Override
-    public boolean CanUseItem(Player player, Location location, ItemType type) {
+    public boolean CanUseItem(Player player, Location location, ItemType type, boolean hasblock) {
         for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanUseItem(player, location, type)) {
+            if (!p.CanUseItem(player, location, type, hasblock)) {
                 p.SendErrorMessage(player, MessageType.UsageNotAllowed);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean CanBreakBlock(Player player, Block block) {
+        for (IprotectionPlugin p : getPlugins()){
+            if (!p.CanBreakBlock(player, block)) {
+                p.SendErrorMessage(player, MessageType.ToCloseToContainer);
                 return false;
             }
         }

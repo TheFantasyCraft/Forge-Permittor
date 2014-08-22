@@ -23,7 +23,7 @@ public abstract class IMod {
     @Getter
     private List<Class> FoodInterfaces = new LinkedList<Class>();
     @Getter
-    private List<Class> SwordInterfaces = new LinkedList<Class>();
+    private List<Class> WeaponInterfaces = new LinkedList<Class>();
     @Getter
     private List<Class> ItemBlockInterfaces = new LinkedList<Class>();
 
@@ -90,19 +90,19 @@ public abstract class IMod {
         this.getFoodInterfaces().add(interfaceClass);
     }
 
-    protected void addSwordInterface(String interfaceClass) {
+    protected void addWeaponInterface(String interfaceClass) {
         try {
-            this.addSwordInterface(Class.forName(interfaceClass));
+            this.addWeaponInterface(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
     }
 
-    protected void addSwordInterface(Class interfaceClass) {
-        this.getSwordInterfaces().add(interfaceClass);
+    protected void addWeaponInterface(Class interfaceClass) {
+        this.getWeaponInterfaces().add(interfaceClass);
     }
 
     protected void addItemBlockInterface(String interfaceClass) {
         try {
-            this.addSwordInterface(Class.forName(interfaceClass));
+            this.addItemBlockInterface(Class.forName(interfaceClass));
         } catch (ClassNotFoundException e) {}
     }
 

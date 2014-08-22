@@ -85,7 +85,7 @@ public class InformationManager {
 
     public boolean HasSwordInterface(Class OtherClass){
         for (IMod mod : Mods){
-            for (Class in : mod.getSwordInterfaces()) {
+            for (Class in : mod.getWeaponInterfaces()) {
                 if (in.isAssignableFrom(OtherClass))
                     return true;
             }

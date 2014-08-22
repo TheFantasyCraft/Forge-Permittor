@@ -5,5 +5,6 @@ package com.fantasycraft.forgepermittor.protection;
  */
 public enum MessageType {
     InteractNotAllowed,
-    UsageNotAllowed
+    UsageNotAllowed,
+    ToCloseToContainer
 }
