@@ -6,7 +6,7 @@
 
     <groupId>com.fantasycraft</groupId>
     <artifactId>Forge_Permittor</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-BETA</version>
 
     <repositories>
         <repository>

@@ -1,6 +1,7 @@
 package com.fantasycraft.forgepermittor;
 
 import com.fantasycraft.forgepermittor.info.ItemValidator;
+import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
@@ -67,6 +68,7 @@ public class ForgePermittor extends JavaPlugin {
         this.RegisterPlugins();
 
         this.getServer().getPluginManager().registerEvents( new ProtectionListener(getProtectionManager(), getItemValidator()), this );
+        this.getServer().getPluginManager().registerEvents( new DeathMessageListener(), this );
     }
 
 

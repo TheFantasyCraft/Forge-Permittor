@@ -1,13 +1,18 @@
 package com.fantasycraft.forgepermittor.protection.plugins;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
+import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
 import com.palmergames.bukkit.towny.Towny;
 import com.palmergames.bukkit.towny.TownyMessaging;
+import com.palmergames.bukkit.towny.object.Coord;
 import com.palmergames.bukkit.towny.object.TownBlock;
 import com.palmergames.bukkit.towny.object.TownyPermission;
+import com.palmergames.bukkit.towny.object.TownyWorld;
+import com.palmergames.bukkit.towny.utils.CombatUtil;
 import com.palmergames.bukkit.towny.utils.PlayerCacheUtil;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -59,7 +64,15 @@ public class TownyPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanDamage(Player player) {
+        try{
+            TownyWorld world = (TownyWorld)this.towny.getTownyUniverse().getWorldMap().get(player.getWorld().getName());
+            TownBlock block = world.getTownBlock(Coord.parseCoord(player.getLocation()));
+            return !CombatUtil.preventPvP(world, block);
+        }catch (Exception e){
+            ForgePermittor.log(Util.stackTraceToString(e), true);
+        }
         return true;
+
     }
 
 }

@@ -5,6 +5,7 @@ import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -55,6 +56,6 @@ public class WorldguardPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanDamage(Player player) {
-        return true;
+        return getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).allows(DefaultFlag.PVP);
     }
 }

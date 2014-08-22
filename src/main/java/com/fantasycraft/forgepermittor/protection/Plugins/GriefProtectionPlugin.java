@@ -1,6 +1,5 @@
 package com.fantasycraft.forgepermittor.protection.plugins;
 
-import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
@@ -51,7 +50,6 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
     @Override
     public boolean CanDamage(Player player) {
         Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
-        ForgePermittor.log(claim.allowAccess(player), true);
         if (claim != null && claim.allowAccess(player) == null)
             return false;
         return true;
