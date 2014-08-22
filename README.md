@@ -15,6 +15,5 @@ Feacture:
 
 Todo:
 - Add block BlackList For blocks that shouldn't be protected (Tradables)
--
-
+- add more protection plugins
 
