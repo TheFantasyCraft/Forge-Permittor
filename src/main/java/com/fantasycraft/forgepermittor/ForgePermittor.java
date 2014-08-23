@@ -29,7 +29,7 @@ public class ForgePermittor extends JavaPlugin {
     private ProtectionManager protectionManager;
 
 
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static void log(String string, boolean isdebug){
         if (debug && isdebug)

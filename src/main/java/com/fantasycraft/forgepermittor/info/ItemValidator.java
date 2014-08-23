@@ -53,11 +53,14 @@ public class ItemValidator {
 
 
     public BlockType CheckBlock(Block block) throws InvocationTargetException, IllegalAccessException {
-        if (block.getTypeId() < 4096) {
+        if (block.getTypeId() < 4096 && block.getTypeId() != 0) {
             Object object = nmsResolver.getBlockList().get(block.getTypeId());
             ForgePermittor.log(object.toString(), true);
-            if ( this.getInformationManager().HasContainerInterface(object) ||nmsResolver.getCraftWorldHandler().HasTileEntity(block))
-                return BlockType.Container; //CheckConnectable(block);
+            if ( this.getInformationManager().HasContainerInterface(object) || nmsResolver.getCraftWorldHandler().HasTileEntity(block))
+                if (this.getInformationManager().HasTradeBlockInterface(nmsResolver.getCraftWorldHandler().getTileEntityFrom(block)))
+                    return BlockType.Trade;
+                else
+                    return BlockType.Container; //CheckConnectable(block);
             if (this.getInformationManager().HasBlockInterface(object))
                     return BlockType.Block;
 

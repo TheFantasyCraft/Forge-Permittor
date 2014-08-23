@@ -6,6 +6,7 @@ package com.fantasycraft.forgepermittor.info.types;
 public enum BlockType {
     Container,
     Block,
+    Trade,
 
     Unknown
 }

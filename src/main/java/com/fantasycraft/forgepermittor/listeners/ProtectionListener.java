@@ -6,6 +6,8 @@ import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
+import com.griefcraft.listeners.LWCBlockListener;
+import com.griefcraft.lwc.LWC;
 import lombok.Getter;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -90,6 +92,14 @@ public class ProtectionListener implements Listener {
                         || CheckBlockPlaceforContainer(player, block.getRelative(BlockFace.WEST))
                         || CheckBlockPlaceforContainer(player, block.getRelative(BlockFace.EAST))) {
                     event.setCancelled(true);
+
+                    try {
+                        LWC.getInstance().getConfiguration().setProperty("protections.blocks." + block.getTypeId(), true);
+                        new LWCBlockListener(LWC.getInstance().getPlugin()).onBlockPlace(event);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
             }
         }

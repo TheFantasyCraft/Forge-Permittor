@@ -1,6 +1,7 @@
 package com.fantasycraft.forgepermittor.info;
 
 import com.fantasycraft.forgepermittor.info.mods.BuildCraft;
+import com.fantasycraft.forgepermittor.info.mods.IC2;
 import com.fantasycraft.forgepermittor.info.mods.Vanilla;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import lombok.Data;
@@ -22,34 +23,13 @@ public class InformationManager {
 
         RegisterMod(new Vanilla(nmsResolver));
         RegisterMod(new BuildCraft());
+        RegisterMod(new IC2());
     }
 
     public void RegisterMod(IMod mod){
         Mods.add(mod);
     }
 
-  /*  public Boolean IsConnectable(Block block){
-        Object tile = nmsResolver.getCraftWorldHandler().getTileEntityFrom(block);
-        if (HasConnectableInferface(tile))
-            return true;
-        return false;
-    }
-
-    public boolean HasConnectableInferface(Object OtherClass){
-        return HasConnectableInferface(OtherClass.getClass());
-    }
-
-    public boolean HasConnectableInferface(Class OtherClass){
-        for (IMod mod : Mods){
-                for (Class in : mod.getConnectablesInterfaces()) {
-                    if (in.isAssignableFrom(OtherClass))
-                        return true;
-                }
-        }
-        return false;
-    }
-
-    */
 
     public boolean HasItemBlockContainerInterface(Object OtherClass){
         return HasItemBlockContainerInterface(OtherClass.getClass());
@@ -142,6 +122,20 @@ public class InformationManager {
     public boolean HasItemBlockInterface(Class OtherClass){
         for (IMod mod : Mods){
             for (Class in : mod.getItemBlockInterfaces()) {
+                if (in.isAssignableFrom(OtherClass))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean HasTradeBlockInterface(Object OtherClass) {
+        return HasItemBlockInterface(OtherClass.getClass());
+    }
+
+    public boolean HasTradeBlockInterface(Class OtherClass){
+        for (IMod mod : Mods){
+            for (Class in : mod.getTradeBlockInterfaces()) {
                 if (in.isAssignableFrom(OtherClass))
                     return true;
             }

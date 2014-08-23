@@ -12,11 +12,6 @@ public class Vanilla extends IMod {
         //Blocks
         addBlockInterface(nmsResolver.getBlock());
         addContainerInterface(nmsResolver.getBlockContainer());
-
-        //If we just block containers from being placed to containers hehe
-        //addConnectablesInterface(nmsResolver.getIInventory());
-
-        //Items
         addItemInterFace(nmsResolver.getItem());
         addItemBlockInterface(nmsResolver.getItemBlock());
 

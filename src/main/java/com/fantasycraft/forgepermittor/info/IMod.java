@@ -16,8 +16,6 @@ public abstract class IMod {
     private List<Class> ItemInterFaces = new LinkedList<Class>();
     @Getter
     private List<Class> BlockInterfaces = new LinkedList<Class>();
-    /*@Getter
-    private List<Class> ConnectablesInterfaces = new LinkedList<Class>();*/
     @Getter
     private List<Class> ItemBlockContainerInterfaces = new LinkedList<Class>();
     @Getter
@@ -26,6 +24,8 @@ public abstract class IMod {
     private List<Class> WeaponInterfaces = new LinkedList<Class>();
     @Getter
     private List<Class> ItemBlockInterfaces = new LinkedList<Class>();
+    @Getter
+    private List<Class> TradeBlockInterfaces = new LinkedList<Class>();
 
 
 
@@ -49,15 +49,6 @@ public abstract class IMod {
             getItemInterFaces().add(interfaceClass);
     }
 
-   /* protected void addConnectablesInterface(String interfaceClass)  {
-        try {
-            addConnectablesInterface(Class.forName(interfaceClass));
-        } catch (ClassNotFoundException e) {}
-    }
-
-    protected void addConnectablesInterface(Class interfaceClass)  {
-            getConnectablesInterfaces().add(interfaceClass);
-    }*/
 
     protected void addItemBlockContainerInterface(String interfaceClass)  {
         try {
@@ -108,6 +99,16 @@ public abstract class IMod {
 
     protected void addItemBlockInterface(Class interfaceClass) {
         this.getItemBlockInterfaces().add(interfaceClass);
+    }
+
+    protected void addTradeBlockInterface(String interfaceClass) {
+        try {
+            this.addItemBlockInterface(Class.forName(interfaceClass));
+        } catch (ClassNotFoundException e) {}
+    }
+
+    protected void addTradeBlockInterface(Class interfaceClass) {
+        this.getTradeBlockInterfaces().add(interfaceClass);
     }
 
     public abstract String getName();
