@@ -5,9 +5,11 @@ import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
+import com.fantasycraft.forgepermittor.protection.plugins.LwcPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
+import com.griefcraft.lwc.LWCPlugin;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
@@ -29,7 +31,7 @@ public class ForgePermittor extends JavaPlugin {
     private ProtectionManager protectionManager;
 
 
-    private static boolean debug = false;
+    private static boolean debug = true;
 
     public static void log(String string, boolean isdebug){
         if (debug && isdebug)
@@ -92,6 +94,12 @@ public class ForgePermittor extends JavaPlugin {
         if (griefPrevention != null) {
             log("GriefPrevention Registered!", false);
             getProtectionManager().RegisterPlugin(new GriefProtectionPlugin());
+        }
+
+        LWCPlugin lwcPlugin = (LWCPlugin) getServer().getPluginManager().getPlugin("LWC");
+        if (griefPrevention != null) {
+            log("GriefPrevention Registered!", false);
+            getProtectionManager().RegisterPlugin(new LwcPlugin());
         }
 
 

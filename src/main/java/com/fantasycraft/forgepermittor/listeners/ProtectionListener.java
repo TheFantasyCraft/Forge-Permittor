@@ -6,8 +6,11 @@ import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
-import com.griefcraft.listeners.LWCBlockListener;
 import com.griefcraft.lwc.LWC;
+import com.griefcraft.model.Protection;
+import com.griefcraft.scripting.event.LWCProtectionRegisterEvent;
+import com.griefcraft.scripting.event.LWCProtectionRegistrationPostEvent;
+import com.griefcraft.util.matchers.DoubleChestMatcher;
 import lombok.Getter;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -92,15 +95,13 @@ public class ProtectionListener implements Listener {
                         || CheckBlockPlaceforContainer(player, block.getRelative(BlockFace.WEST))
                         || CheckBlockPlaceforContainer(player, block.getRelative(BlockFace.EAST))) {
                     event.setCancelled(true);
-
-                    try {
-                        LWC.getInstance().getConfiguration().setProperty("protections.blocks." + block.getTypeId(), true);
-                        new LWCBlockListener(LWC.getInstance().getPlugin()).onBlockPlace(event);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
                 }
+
+                //Ik its messy but resolving the block type takes clockcycles, we don't want to do that twice.
+                if (getProtectionManager().HasPlugin("LWC")){
+                    LWCAutoProtect(player, block);
+                }
+
             }
         }
         catch (Exception e){
@@ -120,4 +121,62 @@ public class ProtectionListener implements Listener {
         return false;
     }
 
+    private void LWCAutoProtect(Player player, Block block){
+
+        if (!LWC.ENABLED) {
+            return;
+        }
+        LWC lwc = LWC.getInstance();
+        Protection current = lwc.findProtection(block);
+        if (current != null) {
+            if (current.getProtectionFinder() != null) {
+                current.getProtectionFinder().fullMatchBlocks();
+                lwc.getProtectionCache().add(current);
+            }
+            return;
+        }
+        String autoRegisterType = "private";
+
+        if (!lwc.hasPermission(player, "lwc.create." + autoRegisterType, new String[]{"lwc.create", "lwc.protect"})) {
+            return;
+        }
+        Protection.Type ptype;
+        try {
+            ptype = Protection.Type.valueOf(autoRegisterType.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+        if (ptype == null) {
+            player.sendMessage("§4LWC_INVALID_CONFIG_autoRegister");
+            return;
+        }
+        if (DoubleChestMatcher.PROTECTABLES_CHESTS.contains(block.getType())) {
+            BlockFace[] faces = {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
+            for (BlockFace blockFace : faces) {
+                Block face = block.getRelative(blockFace);
+                if ((face.getType() == block.getType()) &&
+                        (lwc.findProtection(face) != null)) {
+                    return;
+                }
+            }
+        }
+        try {
+            LWCProtectionRegisterEvent evt = new LWCProtectionRegisterEvent(player, block);
+            lwc.getModuleLoader().dispatchEvent(evt);
+            if (evt.isCancelled()) {
+                return;
+            }
+            Protection protection = lwc.getPhysicalDatabase().registerProtection(block.getTypeId(), ptype, block.getWorld().getName(), player.getName(), "", block.getX(), block.getY(), block.getZ());
+            lwc.sendLocale(player, "protection.onplace.create.finalize", new Object[]{"type", lwc.getPlugin().getMessageParser().parseMessage(autoRegisterType.toLowerCase(), new Object[0]), "block", LWC.materialToString(block)});
+            if (protection != null) {
+                lwc.getModuleLoader().dispatchEvent(new LWCProtectionRegistrationPostEvent(protection));
+            }
+        } catch (Exception e) {
+            lwc.sendLocale(player, "protection.internalerror", new Object[]{"id", "PLAYER_INTERACT"});
+            e.printStackTrace();
+        }
+
+    }
 }
+
+

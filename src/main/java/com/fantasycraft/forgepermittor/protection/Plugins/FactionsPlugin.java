@@ -37,4 +37,9 @@ public class FactionsPlugin implements IprotectionPlugin {
     public boolean CanDamage(Player player) {
         return false;
     }
+
+    @Override
+    public String getname() {
+        return "Factions";
+    }
 }

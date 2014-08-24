@@ -21,4 +21,6 @@ public interface IprotectionPlugin {
 
     public boolean CanDamage(Player player);
 
+    public String getname();
+
 }

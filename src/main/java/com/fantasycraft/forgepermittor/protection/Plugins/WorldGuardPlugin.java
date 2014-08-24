@@ -58,4 +58,9 @@ public class WorldguardPlugin implements IprotectionPlugin {
     public boolean CanDamage(Player player) {
         return getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).allows(DefaultFlag.PVP);
     }
+
+    @Override
+    public String getname() {
+        return "WorldGuard";
+    }
 }

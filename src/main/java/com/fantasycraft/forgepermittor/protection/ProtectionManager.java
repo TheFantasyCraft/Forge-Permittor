@@ -77,4 +77,20 @@ public class ProtectionManager implements IprotectionPlugin {
         }
         return true;
     }
+
+    public boolean HasPlugin(String name){
+        for (IprotectionPlugin p : getPlugins()){
+            if (!p.getname().equalsIgnoreCase(name))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String getname() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (IprotectionPlugin p : getPlugins())
+            stringBuilder.append(p.getname());
+        return stringBuilder.toString();
+    }
 }

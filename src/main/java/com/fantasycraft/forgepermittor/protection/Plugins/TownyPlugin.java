@@ -75,4 +75,9 @@ public class TownyPlugin implements IprotectionPlugin {
 
     }
 
+    @Override
+    public String getname() {
+        return "Towny";
+    }
+
 }

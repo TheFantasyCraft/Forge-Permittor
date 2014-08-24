@@ -55,6 +55,11 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
         return true;
     }
 
+    @Override
+    public String getname() {
+        return "GriefPrevention";
+    }
+
     private boolean checkContainers(Player player, Location location)
     {
         Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
