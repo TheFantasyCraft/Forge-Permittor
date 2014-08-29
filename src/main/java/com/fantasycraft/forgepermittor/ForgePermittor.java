@@ -4,12 +4,11 @@ import com.fantasycraft.forgepermittor.info.ItemValidator;
 import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
+import com.fantasycraft.forgepermittor.protection.ProtectionManager;
+import com.fantasycraft.forgepermittor.protection.plugins.FactionsPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
-import com.fantasycraft.forgepermittor.protection.plugins.LwcPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
-import com.fantasycraft.forgepermittor.protection.ProtectionManager;
-import com.griefcraft.lwc.LWCPlugin;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
@@ -96,11 +95,11 @@ public class ForgePermittor extends JavaPlugin {
             getProtectionManager().RegisterPlugin(new GriefProtectionPlugin());
         }
 
-        LWCPlugin lwcPlugin = (LWCPlugin) getServer().getPluginManager().getPlugin("LWC");
-        if (griefPrevention != null) {
-            log("GriefPrevention Registered!", false);
-            getProtectionManager().RegisterPlugin(new LwcPlugin());
+        if (getServer().getPluginManager().getPlugin("Factions") != null) {
+            log("Factions Registered!", false);
+            getProtectionManager().RegisterPlugin(new FactionsPlugin());
         }
+
 
 
 

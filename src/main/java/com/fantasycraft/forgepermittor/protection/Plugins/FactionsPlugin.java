@@ -15,17 +15,17 @@ public class FactionsPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanUseBlock(Player player, Block block, BlockType type) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean CanBreakBlock(Player player, Block block) {
-        return false;
+        return true;
     }
 
     @Override
