@@ -10,5 +10,6 @@ public enum ItemType {
     AdvItem,
     Block,
 
-    Container, Connectable, Unknown
+    Container,
+    Unknown
 }
