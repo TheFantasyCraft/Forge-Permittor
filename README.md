@@ -1,4 +1,4 @@
-Forge-Permittor WIP
+Forge-Permittor WIP [![Build Status](http://vps28166.vps.ovh.ca:8080/buildStatus/icon?job=Forge-Permittor)](http://vps28166.vps.ovh.ca:8080/job/Forge-Permittor/)
 ===============
 
 Recoded Tekkit Permittor that automatically find blocks that need to be protected.
