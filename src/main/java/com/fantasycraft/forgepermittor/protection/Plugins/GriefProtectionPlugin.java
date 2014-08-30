@@ -56,6 +56,11 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
     }
 
     @Override
+    public String BlockInProtectedLand(Block block) {
+        return null;
+    }
+
+    @Override
     public String getname() {
         return "GriefPrevention";
     }

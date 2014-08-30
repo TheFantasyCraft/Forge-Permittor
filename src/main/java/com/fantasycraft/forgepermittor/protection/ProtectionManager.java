@@ -78,6 +78,17 @@ public class ProtectionManager implements IprotectionPlugin {
         return true;
     }
 
+    @Override
+    public String BlockInProtectedLand(Block block) {
+        for (IprotectionPlugin p : getPlugins()){
+            String blockedplugin = p.BlockInProtectedLand(block);
+            if (blockedplugin != null) {
+                return blockedplugin;
+            }
+        }
+        return null;
+    }
+
     public boolean HasPlugin(String name){
         for (IprotectionPlugin p : getPlugins()){
             if (!p.getname().equalsIgnoreCase(name))
