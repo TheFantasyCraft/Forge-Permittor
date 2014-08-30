@@ -54,6 +54,7 @@ public class ForgePermittor extends JavaPlugin {
             setEnabled(false);
             return;
         }
+        this.itemValidator = new ItemValidator(getNmsResolver());
 
         this.RegisterPlugins();
         this.RegisterListeners();
@@ -105,6 +106,5 @@ public class ForgePermittor extends JavaPlugin {
         log("ItemBlock: " + getNmsResolver().getItemBlock().getName(), true);
         log("NBTTagCompound: " + getNmsResolver().getNBTTagCompound().getName(), true);
         log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
-        this.itemValidator = new ItemValidator(getNmsResolver());
     }
 }

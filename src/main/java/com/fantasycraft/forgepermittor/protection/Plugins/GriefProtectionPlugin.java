@@ -57,7 +57,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public String BlockInProtectedLand(Block block) {
-        return null;
+        return null; //this plugin does it good :)!!
     }
 
     @Override

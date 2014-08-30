@@ -5,7 +5,9 @@ import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -56,12 +58,18 @@ public class WorldguardPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanDamage(Player player) {
-        return getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).allows(DefaultFlag.PVP);
+        return this.getWorldGuard().getRegionManager(player.getWorld()).getApplicableRegions(player.getLocation()).allows(DefaultFlag.PVP);
     }
 
     @Override
     public String BlockInProtectedLand(Block block) {
-        return null;
+        ApplicableRegionSet regions = getWorldGuard().getRegionManager(block.getWorld()).getApplicableRegions(block.getLocation());
+        if (regions.size() > 0)
+           for (ProtectedRegion region : regions ){
+                if (!region.getId().equalsIgnoreCase("__global__"))
+                    return getname();
+           }
+           return null;
     }
 
     @Override

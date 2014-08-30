@@ -1,4 +1,5 @@
-name: Forge Permittor
-main: com.fantasycraft.forgepermittor.ForgePermittor
-version: 0.1-BETA
-softdepend: [Towny, WorldGuard, Factions, GriefPervention]
+name: ${pom.name}
+main: ${plugin.main}
+version: ${pom.version}
+softdepend: [${plugin.softdepend}]
+depend: [${plugin.depend}]

@@ -4,9 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
     <groupId>com.fantasycraft</groupId>
     <artifactId>Forge_Permittor</artifactId>
-    <version>0.1-BETA</version>
+
+    <version>0.2-BETA</version>
+    <name>Forge Permittor</name>
+
+    <properties>
+        <plugin.main>com.fantasycraft.forgepermittor.ForgePermittor</plugin.main>
+        <plugin.softdepend>Towny, WorldGuard, Factions, GriefPervention</plugin.softdepend>
+        <plugin.depend></plugin.depend>
+    </properties>
+
 
     <repositories>
         <repository>
@@ -22,6 +32,7 @@
             <url>http://vps28166.vps.ovh.ca:8080/plugin/repository/project/Factions/LastSuccessful/repository/</url>
         </repository>
     </repositories>
+
 
 
     <dependencies>
@@ -43,7 +54,12 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>LATEST</version>
+            <version>5.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+            <version>5.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.palmergames</groupId>
@@ -105,7 +121,11 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
-
-
 </project>

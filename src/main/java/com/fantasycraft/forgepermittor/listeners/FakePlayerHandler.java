@@ -21,8 +21,17 @@ public class FakePlayerHandler implements Listener {
     public void onBlockBreakEvent(BlockBreakEvent event){
         String name = event.getPlayer().getName();
         if (name.startsWith("[") && name.endsWith("]")){
-            protectionManager.CanBreakBlock()
-
+            try {
+                String plugin = protectionManager.BlockInProtectedLand(event.getBlock());
+                if (plugin != null)
+                    event.setCancelled(true);
+                else
+                    event.setCancelled(false);
+            }catch (Exception e){
+                //When we can't invoke the plugins correctly it seems safer to block this
+                e.printStackTrace();
+                event.setCancelled(true);
+            }
         }
     }
 

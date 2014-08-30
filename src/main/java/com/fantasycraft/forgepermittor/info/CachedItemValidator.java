@@ -1,8 +1,8 @@
 package com.fantasycraft.forgepermittor.info;
 
+import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
-import com.sk89q.worldedit.blocks.BlockType;
 import lombok.Getter;
 
 import java.util.HashMap;
