@@ -2,6 +2,7 @@ package com.fantasycraft.forgepermittor;
 
 import com.fantasycraft.forgepermittor.info.ItemValidator;
 import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
+import com.fantasycraft.forgepermittor.listeners.FakePlayerHandler;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
@@ -45,7 +46,6 @@ public class ForgePermittor extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         try {
             this.nmsResolver = new NMSResolver();
         } catch (Exception e) {
@@ -54,24 +54,18 @@ public class ForgePermittor extends JavaPlugin {
             setEnabled(false);
             return;
         }
-        log("Itemstackclass: " + getNmsResolver().getItemStack().getName(), true);
-        log("BlockClass: " + getNmsResolver().getBlock().getName(), true);
-        log("ItemClass: " + getNmsResolver().getItem().getName(), true);
-        log("BlockContainer: " + getNmsResolver().getBlockContainer().getName(), true);
-        log("ItemFood: "  + getNmsResolver().getItemFood().getName(), true);
-        log("ItemSword: " + getNmsResolver().getItemSword().getName(), true);
-        log("ItemBlock: " + getNmsResolver().getItemBlock().getName(), true);
-        log("NBTTagCompound: " + getNmsResolver().getNBTTagCompound().getName(), true);
-        log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
-        this.itemValidator = new ItemValidator(getNmsResolver());
-
 
         this.RegisterPlugins();
+        this.RegisterListeners();
 
-        this.getServer().getPluginManager().registerEvents( new ProtectionListener(getProtectionManager(), getItemValidator()), this );
-        this.getServer().getPluginManager().registerEvents( new DeathMessageListener(), this );
+        this.PrintLog();
     }
 
+    private void RegisterListeners(){
+        this.getServer().getPluginManager().registerEvents( new ProtectionListener(getProtectionManager(), getItemValidator()), this );
+        this.getServer().getPluginManager().registerEvents( new DeathMessageListener(), this );
+        this.getServer().getPluginManager().registerEvents( new FakePlayerHandler(getProtectionManager()), this);
+    }
 
     private void RegisterPlugins(){
 
@@ -99,12 +93,18 @@ public class ForgePermittor extends JavaPlugin {
             log("Factions Registered!", false);
             getProtectionManager().RegisterPlugin(new FactionsPlugin());
         }
+    }
 
-
-
-
-
-
-
+    private void PrintLog(){
+        log("Itemstackclass: " + getNmsResolver().getItemStack().getName(), true);
+        log("BlockClass: " + getNmsResolver().getBlock().getName(), true);
+        log("ItemClass: " + getNmsResolver().getItem().getName(), true);
+        log("BlockContainer: " + getNmsResolver().getBlockContainer().getName(), true);
+        log("ItemFood: "  + getNmsResolver().getItemFood().getName(), true);
+        log("ItemSword: " + getNmsResolver().getItemSword().getName(), true);
+        log("ItemBlock: " + getNmsResolver().getItemBlock().getName(), true);
+        log("NBTTagCompound: " + getNmsResolver().getNBTTagCompound().getName(), true);
+        log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
+        this.itemValidator = new ItemValidator(getNmsResolver());
     }
 }
