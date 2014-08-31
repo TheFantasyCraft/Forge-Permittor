@@ -28,8 +28,8 @@
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
-            <id>LastFactions</id>
-            <url>http://vps28166.vps.ovh.ca:8080/plugin/repository/project/Factions/LastSuccessful/repository/</url>
+            <id>FantasyCraftRepo</id>
+            <url>http://vps28166.vps.ovh.ca/artifactory/plugins/</url>
         </repository>
     </repositories>
 
@@ -63,24 +63,13 @@
         </dependency>
         <dependency>
             <groupId>com.palmergames</groupId>
-            <artifactId>towny</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Towny.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.griefcraft</groupId>
-            <artifactId>LWC</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/LWC.jar</systemPath>
+            <artifactId>Towny</artifactId>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/GriefPrevention.jar</systemPath>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
@@ -91,11 +80,10 @@
         <!-- Log plugins -->
         <dependency>
             <groupId>net.coreprotect</groupId>
-            <artifactId>Coreprotect</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/CoreProtect_2.04.jar</systemPath>
+            <artifactId>CoreProtect</artifactId>
+            <version>2.04</version>
         </dependency>
+
 
         <!--plugins that require some modifactions -->
         <dependency>
