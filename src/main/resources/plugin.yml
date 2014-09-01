@@ -3,3 +3,7 @@ main: ${plugin.main}
 version: ${pom.version}
 softdepend: [${plugin.softdepend}]
 depend: [${plugin.depend}]
+commands:
+    forgepermittor:
+        permission: forgepermittor.command
+        aliases: [fp]

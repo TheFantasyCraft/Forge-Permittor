@@ -14,6 +14,9 @@ import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -29,6 +32,8 @@ public class ForgePermittor extends JavaPlugin {
     private ItemValidator itemValidator;
     @Getter
     private ProtectionManager protectionManager;
+    @Getter
+    private ConfigInfo configInfo;
 
 
     private static boolean debug = true;
@@ -55,6 +60,8 @@ public class ForgePermittor extends JavaPlugin {
             return;
         }
         this.itemValidator = new ItemValidator(getNmsResolver());
+
+        this.LoadConfiguration();
 
         this.RegisterPlugins();
         this.RegisterListeners();
@@ -106,5 +113,30 @@ public class ForgePermittor extends JavaPlugin {
         log("ItemBlock: " + getNmsResolver().getItemBlock().getName(), true);
         log("NBTTagCompound: " + getNmsResolver().getNBTTagCompound().getName(), true);
         log("IInventory: " + getNmsResolver().getIInventory().getName(), true);
+    }
+
+    private void LoadConfiguration(){
+        getConfig().addDefault("protection.enabled", true);
+        getConfig().addDefault("protection.plugins.towny", true);
+        getConfig().addDefault("protection.plugins.worldguard", true);
+        getConfig().addDefault("protection.plugins.griefprevention", true);
+        getConfig().addDefault("other.HandleFakePlayers", true);
+        getConfig().addDefault("other.FixBrokenDeathMessages", true);
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+        this.configInfo = new ConfigInfo(getConfig());
+        System.out.println(getConfigInfo());
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args[0].equalsIgnoreCase("reload")) {
+            reloadConfig();
+            getConfigInfo().reload();
+            System.out.println(getConfigInfo());
+            sender.sendMessage(ChatColor.GREEN + "Plugin reloaded!");
+        }
+        return true;
     }
 }

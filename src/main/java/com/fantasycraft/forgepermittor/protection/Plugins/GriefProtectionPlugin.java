@@ -57,7 +57,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public String BlockInProtectedLand(Block block) {
-        return null; //this plugin does it good :)!!
+        return GriefPrevention.instance.dataStore.getClaimAt(block.getLocation(), true, null) != null ? getname() : null;
     }
 
     @Override
