@@ -8,7 +8,7 @@
     <groupId>com.fantasycraft</groupId>
     <artifactId>Forge_Permittor</artifactId>
 
-    <version>0.2-BETA</version>
+    <version>0.3-BETA</version>
     <name>Forge Permittor</name>
 
     <properties>
@@ -95,6 +95,8 @@
         </dependency>
     </dependencies>
 
+
+
     <build>
         <pluginManagement>
             <plugins>
@@ -105,6 +107,23 @@
                         <source>1.6</source>
                         <target>1.6</target>
                         <compilerArgument></compilerArgument>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildnumber-maven-plugin</artifactId>
+                    <version>1.1</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>create</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <doCheck>true</doCheck>
+                        <doUpdate>true</doUpdate>
                     </configuration>
                 </plugin>
             </plugins>
