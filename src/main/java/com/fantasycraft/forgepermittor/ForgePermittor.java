@@ -6,7 +6,6 @@ import com.fantasycraft.forgepermittor.listeners.FakePlayerHandler;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
-import com.fantasycraft.forgepermittor.protection.plugins.FactionsPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
@@ -35,11 +34,16 @@ public class ForgePermittor extends JavaPlugin {
     @Getter
     private ConfigInfo configInfo;
 
+    @Getter
+    DeathMessageListener deathMessageListener;
+    @Getter
+    FakePlayerHandler fakePlayerHandler;
+    @Getter
+    ProtectionListener protectionListener;
 
-    private static boolean debug = true;
 
     public static void log(String string, boolean isdebug){
-        if (debug && isdebug)
+        if (getInstance().getConfigInfo().isDebug() && isdebug)
             getInstance().getLogger().info("[DEBUG] " + string);
         if (!isdebug)
             getInstance().getLogger().info(string);
@@ -51,6 +55,8 @@ public class ForgePermittor extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.LoadConfiguration();
+
         try {
             this.nmsResolver = new NMSResolver();
         } catch (Exception e) {
@@ -61,18 +67,57 @@ public class ForgePermittor extends JavaPlugin {
         }
         this.itemValidator = new ItemValidator(getNmsResolver());
 
-        this.LoadConfiguration();
-
-        this.RegisterPlugins();
-        this.RegisterListeners();
+        Reload();
 
         this.PrintLog();
     }
 
-    private void RegisterListeners(){
-        this.getServer().getPluginManager().registerEvents( new ProtectionListener(getProtectionManager(), getItemValidator()), this );
-        this.getServer().getPluginManager().registerEvents( new DeathMessageListener(), this );
-        this.getServer().getPluginManager().registerEvents( new FakePlayerHandler(getProtectionManager()), this);
+    @Override
+    public void reloadConfig() {
+        super.reloadConfig();
+        configInfo = new ConfigInfo(getConfig());
+    }
+
+    private void Reload(){
+        if (getConfigInfo().isProtection()) {
+            log("Protection enabled!", false);
+            RegisterPlugins();
+            if (getProtectionListener() == null) {
+                protectionListener = new ProtectionListener(getProtectionManager(), getItemValidator());
+                this.getServer().getPluginManager().registerEvents(getProtectionListener(), this);
+            } else
+                getProtectionListener().setEnabled(true);
+        }
+        else {
+            log("Protection disabled!", false);
+            if (getProtectionListener() != null)
+                getProtectionListener().setEnabled(false);
+        }
+
+        if (getConfigInfo().isDeathMessages()){
+            if (getDeathMessageListener() == null){
+                deathMessageListener = new DeathMessageListener();
+                this.getServer().getPluginManager().registerEvents( getDeathMessageListener(), this );
+            }
+            else
+                getDeathMessageListener().setEnabled(true);
+        }
+        else
+            if (getProtectionListener() != null)
+                getProtectionListener().setEnabled(false);
+
+        if (getConfigInfo().isHandlefakeplayers()){
+            if (getFakePlayerHandler() == null){
+                fakePlayerHandler = new FakePlayerHandler(getProtectionManager());
+                this.getServer().getPluginManager().registerEvents( getFakePlayerHandler(), this);
+            }else
+                getFakePlayerHandler().setEnabled(true);
+        }
+        else
+            if (getFakePlayerHandler() != null)
+                getFakePlayerHandler().setEnabled(false);
+
+
     }
 
     private void RegisterPlugins(){
@@ -81,26 +126,45 @@ public class ForgePermittor extends JavaPlugin {
 
         Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
         if (towny != null) {
-            log("Towny Registered!", false);
-            getProtectionManager().RegisterPlugin(new TownyPlugin(towny));
+            if (getConfigInfo().isTowny()) {
+                log("Towny Registered!", false);
+                getProtectionManager().RegisterPlugin(new TownyPlugin(towny));
+            }else{
+                log("Towny Found but disabled!", false);
+                getProtectionManager().UnloadPlugin("Towny");
+            }
         }
 
         WorldGuardPlugin worldGuard = (WorldGuardPlugin) getServer().getPluginManager().getPlugin("WorldGuard");
         if (worldGuard != null) {
-            log("WorldGuard Registered!", false);
-            getProtectionManager().RegisterPlugin(new WorldguardPlugin(worldGuard));
+            if (getConfigInfo().isWorldguard()) {
+                log("WorldGuard Registered!", false);
+                getProtectionManager().RegisterPlugin(new WorldguardPlugin(worldGuard));
+            }
+            else {
+                log("WorldGuard Found but disabled!", false);
+                getProtectionManager().UnloadPlugin("WorldGuard");
+            }
         }
 
         GriefPrevention griefPrevention = (GriefPrevention) getServer().getPluginManager().getPlugin("GriefPrevention");
         if (griefPrevention != null) {
-            log("GriefPrevention Registered!", false);
-            getProtectionManager().RegisterPlugin(new GriefProtectionPlugin());
+            if (getConfigInfo().isGriefpreventions()) {
+                log("GriefPrevention Registered!", false);
+                getProtectionManager().RegisterPlugin(new GriefProtectionPlugin());
+            }
+            else{
+                log("GriefPrevention Found but Disabled!", false);
+                getProtectionManager().UnloadPlugin("GriefPrevention");
+            }
         }
 
+        //Todo: Add Factions
+        /*
         if (getServer().getPluginManager().getPlugin("Factions") != null) {
             log("Factions Registered!", false);
             getProtectionManager().RegisterPlugin(new FactionsPlugin());
-        }
+        }*/
     }
 
     private void PrintLog(){
@@ -122,6 +186,7 @@ public class ForgePermittor extends JavaPlugin {
         getConfig().addDefault("protection.plugins.griefprevention", true);
         getConfig().addDefault("other.HandleFakePlayers", true);
         getConfig().addDefault("other.FixBrokenDeathMessages", true);
+        getConfig().addDefault("other.debug", false);
         getConfig().options().copyDefaults(true);
         saveConfig();
 
@@ -133,7 +198,7 @@ public class ForgePermittor extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
-            getConfigInfo().reload();
+            Reload();
             System.out.println(getConfigInfo());
             sender.sendMessage(ChatColor.GREEN + "Plugin reloaded!");
         }

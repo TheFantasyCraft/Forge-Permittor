@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,15 +19,28 @@ public class ProtectionManager implements IprotectionPlugin {
     List<IprotectionPlugin> Plugins;
 
     public ProtectionManager(){
-        this.Plugins = new LinkedList<IprotectionPlugin>();
+        this.Plugins = new ArrayList<IprotectionPlugin>();
     }
 
     public void RegisterPlugin(IprotectionPlugin plugin){
+        for (IprotectionPlugin p : getPlugins()) {
+            System.out.println("load: " + p.getname());
+            if (p.getname().equalsIgnoreCase(plugin.getname()))
+                return;
+        }
         this.Plugins.add(plugin);
     }
 
     public void UnloadPlugin(IprotectionPlugin plugin){
         this.Plugins.remove(plugin);
+    }
+
+    public void UnloadPlugin(String plugin){
+        for (IprotectionPlugin p : getPlugins()) {
+            System.out.println("unload: " + p.getname());
+            if (p.getname().equalsIgnoreCase(plugin))
+                UnloadPlugin(p);
+        }
     }
 
     @Override

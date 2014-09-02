@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 /**
  * Created by thomas on 8/16/2014.
  */
-public class ProtectionListener implements Listener {
+public class ProtectionListener extends DisableableEvent implements Listener {
 
     @Getter
     private ProtectionManager protectionManager;
@@ -34,6 +34,9 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event){
+        if (!isEnabled())
+            return;
+
         try {
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
@@ -60,6 +63,9 @@ public class ProtectionListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event)
     {
+        if (!isEnabled())
+            return;
+
         if ((event.getEntity() instanceof Player) && event.getDamager().getType().getName() == null && !getProtectionManager().CanDamage((Player) event.getEntity())) {
             event.setCancelled(true);
         }
@@ -67,6 +73,9 @@ public class ProtectionListener implements Listener {
 
     @EventHandler
     public void onBlockPlaceEvent(BlockPlaceEvent event){
+        if (!isEnabled())
+            return;
+
         if (event.isCancelled())
             return;
         try {

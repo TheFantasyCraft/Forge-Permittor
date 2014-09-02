@@ -9,7 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
  * Created by thomas on 8/30/2014.
  */
 
-public class FakePlayerHandler implements Listener {
+public class FakePlayerHandler extends DisableableEvent implements Listener {
 
     ProtectionManager protectionManager;
 
@@ -19,6 +19,9 @@ public class FakePlayerHandler implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event){
+        if (!isEnabled())
+            return;
+
         String name = event.getPlayer().getName();
         if (name.startsWith("[") && name.endsWith("]")){
             try {
