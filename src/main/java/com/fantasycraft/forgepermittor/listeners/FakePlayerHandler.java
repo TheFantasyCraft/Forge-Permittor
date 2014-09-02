@@ -9,7 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
  * Created by thomas on 8/30/2014.
  */
 
-public class FakePlayerHandler extends DisableableEvent implements Listener {
+public class FakePlayerHandler extends DisableableListener implements Listener {
 
     ProtectionManager protectionManager;
 

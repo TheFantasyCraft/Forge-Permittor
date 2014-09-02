@@ -20,7 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 /**
  * Created by thomas on 8/16/2014.
  */
-public class ProtectionListener extends DisableableEvent implements Listener {
+public class ProtectionListener extends DisableableListener implements Listener {
 
     @Getter
     private ProtectionManager protectionManager;

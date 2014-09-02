@@ -9,9 +9,11 @@ import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
+import com.fantasycraft.forgepermittor.update.UpdateChecker;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
+import lombok.Setter;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,6 +35,9 @@ public class ForgePermittor extends JavaPlugin {
     private ProtectionManager protectionManager;
     @Getter
     private ConfigInfo configInfo;
+
+    @Getter@Setter
+    private boolean isuptodate;
 
     @Getter
     DeathMessageListener deathMessageListener;
@@ -69,6 +74,8 @@ public class ForgePermittor extends JavaPlugin {
         this.protectionManager = new ProtectionManager();
 
         Reload();
+
+        new UpdateChecker(this).runTaskAsynchronously(this);
 
         this.PrintNMSdata();
     }
@@ -194,12 +201,19 @@ public class ForgePermittor extends JavaPlugin {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 0)
+            return false;
+
         if (args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
             Reload();
             System.out.println(getConfigInfo());
             sender.sendMessage(ChatColor.GREEN + "Plugin reloaded!");
         }
+        if (args[0].equalsIgnoreCase("checkupdate")){
+            new UpdateChecker(this).runTaskAsynchronously(this);
+        }
         return true;
+
     }
 }

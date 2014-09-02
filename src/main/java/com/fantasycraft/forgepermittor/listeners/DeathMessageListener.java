@@ -7,7 +7,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 /**
  * Created by thomas on 8/22/2014.
  */
-public class DeathMessageListener extends DisableableEvent implements Listener {
+public class DeathMessageListener extends DisableableListener implements Listener {
     @EventHandler
     public void onPlayerDeathEvent(PlayerDeathEvent event)
     {
