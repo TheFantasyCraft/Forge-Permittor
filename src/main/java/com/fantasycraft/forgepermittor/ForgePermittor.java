@@ -66,10 +66,11 @@ public class ForgePermittor extends JavaPlugin {
             return;
         }
         this.itemValidator = new ItemValidator(getNmsResolver());
+        this.protectionManager = new ProtectionManager();
 
         Reload();
 
-        this.PrintLog();
+        this.PrintNMSdata();
     }
 
     @Override
@@ -121,9 +122,6 @@ public class ForgePermittor extends JavaPlugin {
     }
 
     private void RegisterPlugins(){
-
-        this.protectionManager = new ProtectionManager();
-
         Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
         if (towny != null) {
             if (getConfigInfo().isTowny()) {
@@ -167,7 +165,7 @@ public class ForgePermittor extends JavaPlugin {
         }*/
     }
 
-    private void PrintLog(){
+    private void PrintNMSdata(){
         log("Itemstackclass: " + getNmsResolver().getItemStack().getName(), true);
         log("BlockClass: " + getNmsResolver().getBlock().getName(), true);
         log("ItemClass: " + getNmsResolver().getItem().getName(), true);
