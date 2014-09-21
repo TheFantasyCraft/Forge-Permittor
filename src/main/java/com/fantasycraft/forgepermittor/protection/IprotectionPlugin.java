@@ -21,7 +21,7 @@ public interface IprotectionPlugin {
 
     public boolean CanDamage(Player player);
 
-    public String BlockInProtectedLand(Block block);
+    public String BlockInProtectedLand(Block block, Player player);
 
     public String getname();
 

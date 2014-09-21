@@ -92,9 +92,9 @@ public class ProtectionManager implements IprotectionPlugin {
     }
 
     @Override
-    public String BlockInProtectedLand(Block block) {
+    public String BlockInProtectedLand(Block block, Player player) {
         for (IprotectionPlugin p : getPlugins()){
-            String blockedplugin = p.BlockInProtectedLand(block);
+            String blockedplugin = p.BlockInProtectedLand(block, player );
             if (blockedplugin != null) {
                 return blockedplugin;
             }

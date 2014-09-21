@@ -25,7 +25,7 @@ public class FakePlayerHandler extends DisableableListener implements Listener {
         String name = event.getPlayer().getName();
         if (name.startsWith("[") && name.endsWith("]")){
             try {
-                String plugin = protectionManager.BlockInProtectedLand(event.getBlock());
+                String plugin = protectionManager.BlockInProtectedLand(event.getBlock(), event.getPlayer() );
                 if (plugin != null)
                     event.setCancelled(true);
                 else

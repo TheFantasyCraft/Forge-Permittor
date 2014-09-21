@@ -39,7 +39,7 @@ public class FactionsPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public String BlockInProtectedLand(Block block) {
+    public String BlockInProtectedLand(Block block, Player player) {
         return null;
     }
 
