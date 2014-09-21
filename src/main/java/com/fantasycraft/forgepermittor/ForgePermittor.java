@@ -87,9 +87,9 @@ public class ForgePermittor extends JavaPlugin {
     }
 
     private void Reload(){
+        RegisterPlugins();
         if (getConfigInfo().isProtection()) {
             log("Protection enabled!", false);
-            RegisterPlugins();
             if (getProtectionListener() == null) {
                 protectionListener = new ProtectionListener(getProtectionManager(), getItemValidator());
                 this.getServer().getPluginManager().registerEvents(getProtectionListener(), this);
