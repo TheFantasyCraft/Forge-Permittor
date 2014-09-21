@@ -29,7 +29,7 @@
         </repository>
         <repository>
             <id>FantasyCraftRepo</id>
-            <url>http://vps28166.vps.ovh.ca/artifactory/plugins/</url>
+            <url>http://repo.thomas15v.net/plugins/</url>
         </repository>
     </repositories>
 
