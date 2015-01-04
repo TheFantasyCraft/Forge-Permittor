@@ -5,7 +5,7 @@ import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.FakePlayerHandler;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
-import com.fantasycraft.forgepermittor.protection.Plugins.FactionsPlugin;
+import com.fantasycraft.forgepermittor.protection.plugins.FactionsPlugin;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
@@ -19,6 +19,7 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -164,12 +165,17 @@ public class ForgePermittor extends JavaPlugin {
                 getProtectionManager().UnloadPlugin("GriefPrevention");
             }
         }
+        
+        Plugin factions = getServer().getPluginManager().getPlugin("Factions");
+        if (factions != null && factions.getDescription().getVersion().equalsIgnoreCase("1.8.0")) {
+            if (getConfigInfo().isFactions()) {
+                log("Factions Registered!", false);
+                getProtectionManager().RegisterPlugin(new FactionsPlugin());
+            }else {
+                log("Factions Found but Disabled!", false);
+                getProtectionManager().UnloadPlugin("Factions");
+            }
 
-        //Todo: Add Factions
-
-        if (getServer().getPluginManager().getPlugin("Factions") != null) {
-            log("Factions Registered!", false);
-            getProtectionManager().RegisterPlugin(new FactionsPlugin());
         }
     }
 
@@ -190,6 +196,7 @@ public class ForgePermittor extends JavaPlugin {
         getConfig().addDefault("protection.plugins.towny", true);
         getConfig().addDefault("protection.plugins.worldguard", true);
         getConfig().addDefault("protection.plugins.griefprevention", true);
+        getConfig().addDefault("protection.plugins.factions", true);
         getConfig().addDefault("other.HandleFakePlayers", true);
         getConfig().addDefault("other.FixBrokenDeathMessages", true);
         getConfig().addDefault("other.debug", false);
