@@ -5,6 +5,7 @@ import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.FakePlayerHandler;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
+import com.fantasycraft.forgepermittor.protection.Plugins.FactionsPlugin;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
@@ -165,11 +166,11 @@ public class ForgePermittor extends JavaPlugin {
         }
 
         //Todo: Add Factions
-        /*
+
         if (getServer().getPluginManager().getPlugin("Factions") != null) {
             log("Factions Registered!", false);
             getProtectionManager().RegisterPlugin(new FactionsPlugin());
-        }*/
+        }
     }
 
     private void PrintNMSdata(){

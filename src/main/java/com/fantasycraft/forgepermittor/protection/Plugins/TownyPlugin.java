@@ -33,7 +33,6 @@ public class TownyPlugin implements IprotectionPlugin {
     }
 
     public boolean CanUseBlock(Player player, Block block, BlockType type){
-
         if (type == BlockType.Container)
             return PlayerCacheUtil.getCachePermission(player, block.getLocation(), Material.CHEST.getId(), (byte) 0, TownyPermission.ActionType.SWITCH);
         else

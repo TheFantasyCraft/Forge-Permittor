@@ -52,7 +52,7 @@ public class WorldguardPlugin implements IprotectionPlugin {
             player.sendMessage(ChatColor.DARK_RED  + "You don't have permission to open that in this area.");
         else if (type == MessageType.UsageNotAllowed)
             player.sendMessage(ChatColor.DARK_RED + "You don't have permission for this area.");
-        else
+        else if (type == MessageType.ToCloseToContainer)
             player.sendMessage(ChatColor.DARK_RED + "Your Container is to close, to someone else his Container.");
     }
 
