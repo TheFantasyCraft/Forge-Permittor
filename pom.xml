@@ -20,10 +20,6 @@
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
@@ -33,33 +29,26 @@
         </repository>
     </repositories>
 
-
-
     <dependencies>
-
         <!-- Liberies needed -->
         <dependency>
             <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.4.7-R1.1-SNAPSHOT</version>
+            <artifactId>bukkit</artifactId>
+            <version>1.4.7-R1.0</version>
+            <!--<scope>provided</scope>
+            <systemPath>${project.basedir}/lib/craftbukkit-1.4.7-R0.1.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.14.4</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Protection plugins -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.9</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldedit</artifactId>
-            <version>5.7-SNAPSHOT</version>
+            <version>5.9.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.palmergames</groupId>
@@ -74,15 +63,15 @@
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>factions</artifactId>
-            <version>2.5.0</version>
+            <version>1.8.0</version>
         </dependency>
 
-        <!-- Log plugins -->
+        <!-- Log plugins
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>CoreProtect</artifactId>
             <version>2.04</version>
-        </dependency>
+        </dependency> -->
 
 
         <!--plugins that require some modifactions -->
@@ -100,6 +89,26 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.googlecode.maven-download-plugin</groupId>
+                    <artifactId>maven-download-plugin</artifactId>
+                    <version>0.2-SNAPSHOT</version>
+                    <executions>
+                        <execution>
+                            <!-- the wget goal actually binds itself to this phase by default -->
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>wget</goal>
+                            </goals>
+                            <configuration>
+                                <url>http://url/to/some/file</url>
+                                <outputFileName>foo.bar</outputFileName>
+                                <!-- default target location, just to demonstrate the parameter -->
+                                <targetDirectory>${project.build.directory}</targetDirectory>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.3.2</version>
