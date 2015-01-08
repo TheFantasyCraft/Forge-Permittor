@@ -1,5 +1,6 @@
 package com.fantasycraft.forgepermittor.protection.plugins;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
@@ -9,13 +10,29 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import me.ryanhamshire.GriefPrevention.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by thomas on 8/16/2014.
  */
 public class GriefProtectionPlugin implements IprotectionPlugin {
+
+    private boolean isNewerVersion;
+    private Method method;
+
+    public GriefProtectionPlugin(){
+        try {
+            method = Claim.class.getMethod("allowBuild", Player.class, Material.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        isNewerVersion = method != null;
+    }
 
     @Override
     public boolean CanUseBlock(Player player, Block block, BlockType type) {
@@ -83,8 +100,15 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
     private boolean allowbuild(Player player, Location location)
     {
         Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
-        if (claim != null && claim.allowBuild(player) != null)
-            return false;
+        ForgePermittor.log(isNewerVersion + " " + method , true);
+        if (claim != null)
+            try {
+                ForgePermittor.log((String) method.invoke(claim, player, player.getItemInHand().getType()), true);
+                return isNewerVersion ? (method.invoke(claim, player, player.getItemInHand().getType())) == null : claim.allowBuild(player) == null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         return true;
     }
 

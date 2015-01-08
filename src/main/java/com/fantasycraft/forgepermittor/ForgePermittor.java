@@ -165,7 +165,7 @@ public class ForgePermittor extends JavaPlugin {
                 getProtectionManager().UnloadPlugin("GriefPrevention");
             }
         }
-        
+
         Plugin factions = getServer().getPluginManager().getPlugin("Factions");
         if (factions != null && factions.getDescription().getVersion().equalsIgnoreCase("1.8.0")) {
             if (getConfigInfo().isFactions()) {

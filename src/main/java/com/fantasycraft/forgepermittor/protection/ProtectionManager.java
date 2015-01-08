@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by thomas on 8/16/2014.
  */
-public class ProtectionManager implements IprotectionPlugin {
+public class ProtectionManager {
 
     @Getter
     List<IprotectionPlugin> Plugins;
@@ -43,7 +43,6 @@ public class ProtectionManager implements IprotectionPlugin {
         }
     }
 
-    @Override
     public boolean CanUseBlock(Player player, Block block, BlockType type) {
         for (IprotectionPlugin p : getPlugins()){
             if (!p.CanUseBlock(player, block, type)){
@@ -55,7 +54,6 @@ public class ProtectionManager implements IprotectionPlugin {
         return true;
     }
 
-    @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
         for (IprotectionPlugin p : getPlugins()){
             if (!p.CanUseItem(player, location, type)) {
@@ -66,7 +64,6 @@ public class ProtectionManager implements IprotectionPlugin {
         return true;
     }
 
-    @Override
     public boolean CanBreakBlock(Player player, Block block) {
         for (IprotectionPlugin p : getPlugins()){
             if (!p.CanBreakBlock(player, block)) {
@@ -77,11 +74,6 @@ public class ProtectionManager implements IprotectionPlugin {
         return true;
     }
 
-    @Override
-    @Deprecated //simply don't use
-    public void SendErrorMessage(Player player, MessageType type) {}
-
-    @Override
     public boolean CanDamage(Player player) {
         for (IprotectionPlugin p : getPlugins()){
             if (!p.CanDamage(player)) {
@@ -91,7 +83,6 @@ public class ProtectionManager implements IprotectionPlugin {
         return true;
     }
 
-    @Override
     public String BlockInProtectedLand(Block block, Player player) {
         for (IprotectionPlugin p : getPlugins()){
             String blockedplugin = p.BlockInProtectedLand(block, player );
@@ -110,7 +101,6 @@ public class ProtectionManager implements IprotectionPlugin {
         return false;
     }
 
-    @Override
     public String getname() {
         StringBuilder stringBuilder = new StringBuilder();
         for (IprotectionPlugin p : getPlugins())
