@@ -4,10 +4,6 @@ import com.fantasycraft.forgepermittor.ForgePermittor;
 import lombok.Getter;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Scanner;
-
 /**
  * Created by thomas on 9/2/2014.
  */
@@ -24,10 +20,12 @@ public class UpdateChecker extends BukkitRunnable {
 
     @Override
     public void run() {
-        try {
+        // update disabled
+    	/*try {
             String newversion = new Scanner(new URL("http://vps28166.vps.ovh.ca/update/").openStream(), "UTF-8").useDelimiter("\\A").next().replace("\n", "");
             if (!newversion.equalsIgnoreCase(getForgePermittor().getDescription().getVersion())){
-                getForgePermittor().log("New Update Available: " + newversion + " Current version: " + getForgePermittor().getDescription().getVersion(), false);
+                getForgePermittor();
+				ForgePermittor.log("New Update Available: " + newversion + " Current version: " + getForgePermittor().getDescription().getVersion(), false);
                 getForgePermittor().setIsuptodate(false);
                 if (!ListenerRegistered) {
                     getForgePermittor().getServer().getPluginManager().registerEvents(new UpdateNotifierListener(), getForgePermittor());
@@ -36,8 +34,16 @@ public class UpdateChecker extends BukkitRunnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
+
+	public ForgePermittor getForgePermittor() {
+		return forgePermittor;
+	}
+
+	public static boolean isListenerRegistered() {
+		return ListenerRegistered;
+	}
 
 
 }

@@ -7,15 +7,19 @@ import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.plugins.FactionsPlugin;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
+import com.fantasycraft.forgepermittor.protection.plugins.GriefPreventionPlusPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.GriefProtectionPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.TownyPlugin;
 import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
 import com.fantasycraft.forgepermittor.update.UpdateChecker;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 import lombok.Getter;
 import lombok.Setter;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.kaikk.mc.gpp.GriefPreventionPlus;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -165,6 +169,18 @@ public class ForgePermittor extends JavaPlugin {
                 getProtectionManager().UnloadPlugin("GriefPrevention");
             }
         }
+        
+        GriefPreventionPlus griefPreventionPlus = (GriefPreventionPlus) getServer().getPluginManager().getPlugin("GriefPreventionPlus");
+        if (griefPreventionPlus != null) {
+            if (getConfigInfo().isGriefpreventionplus()) {
+                log("griefPreventionPlus Registered!", false);
+                getProtectionManager().RegisterPlugin(new GriefPreventionPlusPlugin());
+            }
+            else{
+                log("griefPreventionPlus Found but Disabled!", false);
+                getProtectionManager().UnloadPlugin("griefPreventionPlus");
+            }
+        }
 
         Plugin factions = getServer().getPluginManager().getPlugin("Factions");
         if (factions != null && factions.getDescription().getVersion().equalsIgnoreCase("1.8.0")) {
@@ -196,6 +212,7 @@ public class ForgePermittor extends JavaPlugin {
         getConfig().addDefault("protection.plugins.towny", true);
         getConfig().addDefault("protection.plugins.worldguard", true);
         getConfig().addDefault("protection.plugins.griefprevention", true);
+        getConfig().addDefault("protection.plugins.griefpreventionplus", true);
         getConfig().addDefault("protection.plugins.factions", true);
         getConfig().addDefault("other.HandleFakePlayers", true);
         getConfig().addDefault("other.FixBrokenDeathMessages", true);
@@ -224,4 +241,44 @@ public class ForgePermittor extends JavaPlugin {
         return true;
 
     }
+
+	public static ForgePermittor getInstance() {
+		return instance;
+	}
+
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public ItemValidator getItemValidator() {
+		return itemValidator;
+	}
+
+	public ProtectionManager getProtectionManager() {
+		return protectionManager;
+	}
+
+	public ConfigInfo getConfigInfo() {
+		return configInfo;
+	}
+
+	public boolean isIsuptodate() {
+		return isuptodate;
+	}
+
+	public DeathMessageListener getDeathMessageListener() {
+		return deathMessageListener;
+	}
+
+	public FakePlayerHandler getFakePlayerHandler() {
+		return fakePlayerHandler;
+	}
+
+	public ProtectionListener getProtectionListener() {
+		return protectionListener;
+	}
+
+	public void setIsuptodate(boolean isuptodate) {
+		this.isuptodate = isuptodate;
+	}
 }

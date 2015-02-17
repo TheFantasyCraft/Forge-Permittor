@@ -113,4 +113,36 @@ public abstract class IMod {
 
     public abstract String getName();
 
+	public List<Class> getContainerInterfaces() {
+		return ContainerInterfaces;
+	}
+
+	public List<Class> getItemInterFaces() {
+		return ItemInterFaces;
+	}
+
+	public List<Class> getBlockInterfaces() {
+		return BlockInterfaces;
+	}
+
+	public List<Class> getItemBlockContainerInterfaces() {
+		return ItemBlockContainerInterfaces;
+	}
+
+	public List<Class> getFoodInterfaces() {
+		return FoodInterfaces;
+	}
+
+	public List<Class> getWeaponInterfaces() {
+		return WeaponInterfaces;
+	}
+
+	public List<Class> getItemBlockInterfaces() {
+		return ItemBlockInterfaces;
+	}
+
+	public List<Class> getTradeBlockInterfaces() {
+		return TradeBlockInterfaces;
+	}
+
 }

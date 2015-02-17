@@ -123,4 +123,108 @@ public class NMSResolver {
                return m;
         return null;
     }
+
+	public Class getCraftItemStack() {
+		return CraftItemStack;
+	}
+
+	public Class getCraftOfflinePlayer() {
+		return CraftOfflinePlayer;
+	}
+
+	public Class getCraftWorld() {
+		return CraftWorld;
+	}
+
+	public Class getCraftInventory() {
+		return CraftInventory;
+	}
+
+	public Class getItemStack() {
+		return ItemStack;
+	}
+
+	public Class getNBTTagCompound() {
+		return NBTTagCompound;
+	}
+
+	public Class getBlock() {
+		return Block;
+	}
+
+	public Class getItem() {
+		return Item;
+	}
+
+	public Class getBlockContainer() {
+		return BlockContainer;
+	}
+
+	public Class getItemSword() {
+		return ItemSword;
+	}
+
+	public Class getItemFood() {
+		return ItemFood;
+	}
+
+	public Class getItemBlock() {
+		return ItemBlock;
+	}
+
+	public Class getItemDoor() {
+		return ItemDoor;
+	}
+
+	public Class getTileEntity() {
+		return TileEntity;
+	}
+
+	public Class getIInventory() {
+		return IInventory;
+	}
+
+	public Class getItemBow() {
+		return ItemBow;
+	}
+
+	public ItemList getBlockList() {
+		return BlockList;
+	}
+
+	public ItemList getItemList() {
+		return ItemList;
+	}
+
+	public BlockHandler getBlockHandler() {
+		return blockHandler;
+	}
+
+	public CraftWorldHandler getCraftWorldHandler() {
+		return craftWorldHandler;
+	}
+
+	public CraftItemStackHandler getCraftItemStackHandler() {
+		return craftItemStackHandler;
+	}
+
+	public ItemStackHandler getItemStackHandler() {
+		return itemStackHandler;
+	}
+
+	public ItemBlockHandler getItemBlockHandler() {
+		return itemBlockHandler;
+	}
+
+	public String getCraftbukkitLocation() {
+		return CraftbukkitLocation;
+	}
+
+	public String getCraftbukkit() {
+		return craftbukkit;
+	}
+
+	public void setItemBow(Class itemBow) {
+		ItemBow = itemBow;
+	}
 }

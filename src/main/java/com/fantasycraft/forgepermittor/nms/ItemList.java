@@ -65,4 +65,24 @@ public class ItemList {
             return GetBlockString.invoke(null, ID);
 
     }
+
+	public Class getItemClass() {
+		return ItemClass;
+	}
+
+	public Object getList() {
+		return list;
+	}
+
+	public Method getGetBlock() {
+		return GetBlock;
+	}
+
+	public Method getGetBlockString() {
+		return GetBlockString;
+	}
+
+	public int getLength() {
+		return Length;
+	}
 }

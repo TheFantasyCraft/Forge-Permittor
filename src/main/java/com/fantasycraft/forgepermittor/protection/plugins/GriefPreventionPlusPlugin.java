@@ -5,9 +5,9 @@ import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
-import me.ryanhamshire.GriefPrevention.Claim;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import me.ryanhamshire.GriefPrevention.Messages;
+import net.kaikk.mc.gpp.Claim;
+import net.kaikk.mc.gpp.GriefPreventionPlus;
+import net.kaikk.mc.gpp.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,12 +19,12 @@ import java.lang.reflect.Method;
 /**
  * Created by thomas on 8/16/2014.
  */
-public class GriefProtectionPlugin implements IprotectionPlugin {
+public class GriefPreventionPlusPlugin implements IprotectionPlugin {
 
     private boolean isNewerVersion;
     private Method method;
 
-    public GriefProtectionPlugin(){
+    public GriefPreventionPlusPlugin(){
         try {
             method = Claim.class.getMethod("allowBuild", Player.class, Material.class);
         } catch (NoSuchMethodException e) {
@@ -42,7 +42,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
-        //Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
+        //Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(player.getLocation(), true, null);
         if (type == ItemType.Food || type ==  ItemType.Block || type == ItemType.Container || type == ItemType.Weapon)
             return true;
         return allowbuild(player, location);
@@ -55,7 +55,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public void SendErrorMessage(Player player, MessageType type) {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
+        Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(player.getLocation(), true, null);
         if (type == MessageType.ToCloseToContainer)
             sendMessage(player, ChatColor.RED, "Your Container is to close, to someone else his Container.");
         else
@@ -65,7 +65,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanDamage(Player player) {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
+        Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(player.getLocation(), true, null);
         if (claim != null && claim.allowAccess(player) == null)
             return false;
         return true;
@@ -73,8 +73,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public String BlockInProtectedLand(Block block, Player player) {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(block.getLocation(), true, null);
-
+        Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(block.getLocation(), true, null);
         if (player != null)
             return claim.allowAccess(player) == null ? getname() : null;
         return getname();
@@ -87,7 +86,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     private boolean checkContainers(Player player, Location location)
     {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
+        Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(location, true, null);
         if (claim != null && claim.allowContainers(player) != null)
             return false;
         return true;
@@ -95,7 +94,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     private boolean allowbuild(Player player, Location location)
     {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
+        Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(location, true, null);
         ForgePermittor.log(isNewerVersion + " " + method , true);
         if (claim != null)
             try {
@@ -116,7 +115,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     static void sendMessage(Player player, ChatColor color, Messages messageID, long delayInTicks, String... args)
     {
-        String message = GriefPrevention.instance.dataStore.getMessage(messageID, args);
+        String message = GriefPreventionPlus.instance.dataStore.getMessage(messageID, args);
         sendMessage(player, color, message);
     }
 

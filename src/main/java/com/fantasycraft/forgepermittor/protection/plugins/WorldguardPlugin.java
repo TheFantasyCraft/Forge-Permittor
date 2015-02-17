@@ -76,4 +76,8 @@ public class WorldguardPlugin implements IprotectionPlugin {
     public String getname() {
         return "WorldGuard";
     }
+
+	public WorldGuardPlugin getWorldGuard() {
+		return worldGuard;
+	}
 }

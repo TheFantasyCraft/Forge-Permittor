@@ -107,4 +107,8 @@ public class ProtectionManager {
             stringBuilder.append(p.getname());
         return stringBuilder.toString();
     }
+
+	public List<IprotectionPlugin> getPlugins() {
+		return Plugins;
+	}
 }

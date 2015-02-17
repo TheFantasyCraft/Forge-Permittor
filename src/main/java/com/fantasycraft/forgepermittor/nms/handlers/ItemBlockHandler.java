@@ -52,4 +52,12 @@ public class ItemBlockHandler {
             return -1;
         }
     }
+
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
 }
