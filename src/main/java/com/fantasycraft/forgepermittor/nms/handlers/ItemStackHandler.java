@@ -33,5 +33,13 @@ public class ItemStackHandler {
         return false;
     }
 
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public Method getHasTagCompound() {
+		return HasTagCompound;
+	}
+
 
 }

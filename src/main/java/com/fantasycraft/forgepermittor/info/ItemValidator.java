@@ -89,4 +89,12 @@ public class ItemValidator {
         }
         return ItemType.Block;
     }
+
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public InformationManager getInformationManager() {
+		return informationManager;
+	}
 }

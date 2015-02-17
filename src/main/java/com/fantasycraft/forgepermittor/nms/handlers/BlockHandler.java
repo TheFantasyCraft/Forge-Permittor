@@ -40,4 +40,12 @@ public class BlockHandler {
             return false;
         }
     }
+
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public Method getHasTileEntity() {
+		return HasTileEntity;
+	}
 }

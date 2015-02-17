@@ -90,4 +90,8 @@ public class TownyPlugin implements IprotectionPlugin {
         return "Towny";
     }
 
+	public Towny getTowny() {
+		return towny;
+	}
+
 }

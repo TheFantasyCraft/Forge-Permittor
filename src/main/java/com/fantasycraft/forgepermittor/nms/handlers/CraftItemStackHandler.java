@@ -35,4 +35,12 @@ public class CraftItemStackHandler {
         }
         return null;
     }
+
+	public NMSResolver getNmsResolver() {
+		return nmsResolver;
+	}
+
+	public Method getAsNMSCopymethode() {
+		return asNMSCopymethode;
+	}
 }

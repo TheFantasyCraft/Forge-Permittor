@@ -118,6 +118,14 @@ public class ProtectionListener extends DisableableListener implements Listener 
         }
         return false;
     }
+
+	public ProtectionManager getProtectionManager() {
+		return protectionManager;
+	}
+
+	public ItemValidator getValidator() {
+		return validator;
+	}
 }
 
 
