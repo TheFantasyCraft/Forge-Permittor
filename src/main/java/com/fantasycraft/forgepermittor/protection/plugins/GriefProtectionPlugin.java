@@ -28,9 +28,7 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
     public GriefProtectionPlugin(){
         try {
             method = Claim.class.getMethod("allowBuild", Player.class, Material.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
         isNewerVersion = method != null;
     }
 
@@ -43,7 +41,6 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
-        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
         if (type == ItemType.Food || type ==  ItemType.Block || type == ItemType.Container || type == ItemType.Weapon)
             return true;
         return allowbuild(player, location);
