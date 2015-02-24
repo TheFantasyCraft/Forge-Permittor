@@ -13,9 +13,12 @@ import com.fantasycraft.forgepermittor.protection.plugins.WorldguardPlugin;
 import com.fantasycraft.forgepermittor.update.UpdateChecker;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 import lombok.Getter;
 import lombok.Setter;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
+import net.kaikk.mc.gpp.GriefPreventionPlus;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -165,6 +168,18 @@ public class ForgePermittor extends JavaPlugin {
                 getProtectionManager().UnloadPlugin("GriefPrevention");
             }
         }
+		
+        GriefPreventionPlus griefPreventionPlus = (GriefPreventionPlus) getServer().getPluginManager().getPlugin("GriefPreventionPlus");
+        if (griefPreventionPlus != null) {
+            if (getConfigInfo().isGriefpreventionplus()) {
+                log("GriefPreventionPlus Registered!", false);
+                getProtectionManager().RegisterPlugin(new GriefPreventionPlusPlugin());
+            }
+            else{
+                log("GriefPreventionPlus Found but Disabled!", false);
+                getProtectionManager().UnloadPlugin("GriefPreventionPlus");
+            }
+        }
 
         Plugin factions = getServer().getPluginManager().getPlugin("Factions");
         if (factions != null && factions.getDescription().getVersion().equalsIgnoreCase("1.8.0")) {
@@ -196,6 +211,7 @@ public class ForgePermittor extends JavaPlugin {
         getConfig().addDefault("protection.plugins.towny", true);
         getConfig().addDefault("protection.plugins.worldguard", true);
         getConfig().addDefault("protection.plugins.griefprevention", true);
+		getConfig().addDefault("protection.plugins.griefpreventionplus", true);
         getConfig().addDefault("protection.plugins.factions", true);
         getConfig().addDefault("other.HandleFakePlayers", true);
         getConfig().addDefault("other.FixBrokenDeathMessages", true);
