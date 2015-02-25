@@ -13,7 +13,7 @@
 
     <properties>
         <plugin.main>com.fantasycraft.forgepermittor.ForgePermittor</plugin.main>
-        <plugin.softdepend>Towny, WorldGuard, Factions, GriefPervention</plugin.softdepend>
+        <plugin.softdepend>Towny, WorldGuard, Factions, GriefPervention, GriefPreventionPlus</plugin.softdepend>
         <plugin.depend></plugin.depend>
     </properties>
 
