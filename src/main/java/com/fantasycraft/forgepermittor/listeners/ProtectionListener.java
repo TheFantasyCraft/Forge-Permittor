@@ -16,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by thomas on 8/16/2014.
@@ -44,6 +46,7 @@ public class ProtectionListener extends DisableableListener implements Listener 
                 {
                     event.setUseItemInHand(Event.Result.DENY);
                     event.setUseInteractedBlock(Event.Result.DENY);
+
                     return;
                 }
             }
@@ -117,6 +120,23 @@ public class ProtectionListener extends DisableableListener implements Listener 
             ForgePermittor.log(Util.stackTraceToString(e), true);
         }
         return false;
+    }
+
+    private void blockItemUse(Player player){
+        Inventory inventory = player.getInventory();
+        ItemStack item = player.getItemInHand();
+        //int itemlocation = inventory.
+        boolean hasreplaced = false;
+        inventory.remove(item);
+        for (int i = 0; i < inventory.getSize(); i++){
+            if (inventory.getItem(i) == null) {
+                inventory.setItem(i, item);
+                hasreplaced = true;
+            }
+        }
+
+        if (!hasreplaced)
+            player.getWorld().dropItem(player.getLocation(), item);
     }
 }
 
