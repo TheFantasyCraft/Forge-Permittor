@@ -75,14 +75,14 @@ public class TownyPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public String BlockInProtectedLand(Block block, Player player) {
+    public boolean BlockInProtectedLand(Block block) {
         try{
             TownyWorld world = (TownyWorld)this.towny.getTownyUniverse().getWorldMap().get(block.getWorld().getName());
-            return world.getTownBlock(Coord.parseCoord(block.getLocation())) != null ? getname() : null;
+            return world.getTownBlock(Coord.parseCoord(block.getLocation())) != null;
         }catch (Exception e){
             ForgePermittor.log(Util.stackTraceToString(e), true);
         }
-        return null;
+        return false;
     }
 
     @Override

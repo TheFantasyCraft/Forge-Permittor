@@ -62,14 +62,14 @@ public class WorldguardPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public String BlockInProtectedLand(Block block, Player player) {
+    public boolean BlockInProtectedLand(Block block) {
         ApplicableRegionSet regions = getWorldGuard().getRegionManager(block.getWorld()).getApplicableRegions(block.getLocation());
         if (regions.size() > 0)
            for (ProtectedRegion region : regions ){
                 if (!region.getId().equalsIgnoreCase("__global__"))
-                    return getname();
+                    return true;
            }
-           return null;
+           return false;
     }
 
     @Override

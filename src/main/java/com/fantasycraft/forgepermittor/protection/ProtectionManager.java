@@ -83,14 +83,12 @@ public class ProtectionManager {
         return true;
     }
 
-    public String BlockInProtectedLand(Block block, Player player) {
+    public boolean BlockInProtectedLand(Block block) {
         for (IprotectionPlugin p : getPlugins()){
-            String blockedplugin = p.BlockInProtectedLand(block, player );
-            if (blockedplugin != null) {
-                return blockedplugin;
-            }
+            if (p.BlockInProtectedLand(block))
+                return true;
         }
-        return null;
+        return false;
     }
 
     public boolean HasPlugin(String name){

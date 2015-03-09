@@ -72,11 +72,9 @@ public class GriefPreventionPlusPlugin implements IprotectionPlugin {
     }
 
     @Override
-    public String BlockInProtectedLand(Block block, Player player) {
+    public boolean BlockInProtectedLand(Block block) {
         Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(block.getLocation(), true, null);
-        if (player != null)
-            return claim.allowAccess(player) == null ? getname() : null;
-        return getname();
+        return claim != null;
     }
 
     @Override

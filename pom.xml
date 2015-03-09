@@ -35,74 +35,114 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.4.7-R1.0</version>
-            <!--<scope>provided</scope>
-            <systemPath>${project.basedir}/lib/craftbukkit-1.4.7-R0.1.jar</systemPath>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.14.4</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Protection plugins -->
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version>5.9.1-SNAPSHOT</version>
+            <version>6.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>LATEST</version>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.massivecraft</groupId>
-            <artifactId>factions</artifactId>
-            <version>1.8.0</version>
+            <artifactId>Factions</artifactId>
+            <version>2.7.4</version>
+        </dependency>-->
+        <dependency>
+            <groupId>techcable.minecraft</groupId>
+            <artifactId>factionsapi</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/factionsapi-base-1.0.0-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.kaikk.mc</groupId>
             <artifactId>GriefPreventionPlus</artifactId>
             <version>10.7.1d</version>
+            <scope>provided</scope>
         </dependency>
         <!--plugins that require some modifactions -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.Acrobot</groupId>
             <artifactId>ChestShop</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/chestshop.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>LWC</groupId>
+            <artifactId>LWC</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${basedir}/lib/LWC.jar</systemPath>
+        </dependency>-->
     </dependencies>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>com.googlecode.addjars-maven-plugin</groupId>
+                <artifactId>addjars-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>add-jars</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/lib</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>techcable.minecraft.factionsapi</pattern>
+                                    <shadedPattern>com.fantasycraft.forgepermittor.lib.techcable.minecraft.factionsapi</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>com.googlecode.maven-download-plugin</groupId>
-                    <artifactId>maven-download-plugin</artifactId>
-                    <version>0.2-SNAPSHOT</version>
-                    <executions>
-                        <execution>
-                            <!-- the wget goal actually binds itself to this phase by default -->
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>wget</goal>
-                            </goals>
-                            <configuration>
-                                <url>http://url/to/some/file</url>
-                                <outputFileName>foo.bar</outputFileName>
-                                <!-- default target location, just to demonstrate the parameter -->
-                                <targetDirectory>${project.build.directory}</targetDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.3.2</version>
@@ -112,6 +152,7 @@
                         <compilerArgument></compilerArgument>
                     </configuration>
                 </plugin>
+
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>

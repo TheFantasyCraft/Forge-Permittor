@@ -49,6 +49,7 @@ public class ForgePermittor extends JavaPlugin {
     ProtectionListener protectionListener;
 
 
+
     public static void log(String string, boolean isdebug){
         if (getInstance().getConfigInfo().isDebug() && isdebug)
             getInstance().getLogger().info("[DEBUG] " + string);
@@ -179,7 +180,7 @@ public class ForgePermittor extends JavaPlugin {
         }
 
         Plugin factions = getServer().getPluginManager().getPlugin("Factions");
-        if (factions != null && factions.getDescription().getVersion().equalsIgnoreCase("1.8.0")) {
+        if (factions != null) {
             if (getConfigInfo().isFactions()) {
                 log("Factions Registered!", false);
                 getProtectionManager().RegisterPlugin(new FactionsPlugin());
