@@ -42,7 +42,6 @@ public class GriefPreventionPlusPlugin implements IprotectionPlugin {
 
     @Override
     public boolean CanUseItem(Player player, Location location, ItemType type) {
-        //Claim claim = GriefPreventionPlus.instance.dataStore.getClaimAt(player.getLocation(), true, null);
         if (type == ItemType.Food || type ==  ItemType.Block || type == ItemType.Container || type == ItemType.Weapon)
             return true;
         return allowbuild(player, location);
@@ -96,7 +95,6 @@ public class GriefPreventionPlusPlugin implements IprotectionPlugin {
         ForgePermittor.log(isNewerVersion + " " + method , true);
         if (claim != null)
             try {
-                //ForgePermittor.log((String) method.invoke(claim, player, player.getItemInHand().getType()), true);
                 return isNewerVersion ? (method.invoke(claim, player, player.getItemInHand().getType())) == null : claim.allowBuild(player) == null;
             } catch (Exception e) {
                 e.printStackTrace();

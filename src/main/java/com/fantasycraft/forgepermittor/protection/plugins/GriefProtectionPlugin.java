@@ -94,7 +94,6 @@ public class GriefProtectionPlugin implements IprotectionPlugin {
         ForgePermittor.log(isNewerVersion + " " + method , true);
         if (claim != null)
             try {
-                //ForgePermittor.log((String) method.invoke(claim, player, player.getItemInHand().getType()), true);
                 return isNewerVersion ? (method.invoke(claim, player, player.getItemInHand().getType())) == null : claim.allowBuild(player) == null;
             } catch (Exception e) {
                 e.printStackTrace();

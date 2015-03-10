@@ -32,7 +32,6 @@ public class FactionsPlugin implements IprotectionPlugin {
         if (type == BlockType.Container){
             return canAccesLocation(player, block.getLocation());
         }
-            //return MPerm.getPermBuild().has(player, block.getLocation(), true);
         return true;
     }
 

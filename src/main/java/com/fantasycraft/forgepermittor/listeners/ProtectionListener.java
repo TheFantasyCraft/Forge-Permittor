@@ -7,6 +7,7 @@ import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import lombok.Getter;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -15,6 +16,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +41,6 @@ public class ProtectionListener extends DisableableListener implements Listener 
     public void onPlayerInteractEvent(PlayerInteractEvent event){
         if (!isEnabled())
             return;
-
         try {
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
@@ -137,6 +139,15 @@ public class ProtectionListener extends DisableableListener implements Listener 
 
         if (!hasreplaced)
             player.getWorld().dropItem(player.getLocation(), item);
+    }
+
+    @EventHandler
+    public void entityInteractEvent(PlayerInteractEntityEvent event){
+        if (!event.isCancelled() && event.getRightClicked() != null) {
+            boolean allowed = protectionManager.CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), ItemType.Item);
+            if (!allowed)
+                event.setCancelled(true);
+        }
     }
 }
 
