@@ -7,7 +7,6 @@ import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
 import com.fantasycraft.forgepermittor.protection.plugins.*;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
-import com.fantasycraft.forgepermittor.update.UpdateChecker;
 import com.palmergames.bukkit.towny.Towny;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
@@ -77,9 +76,6 @@ public class ForgePermittor extends JavaPlugin {
         this.protectionManager = new ProtectionManager();
 
         Reload();
-
-        new UpdateChecker(this).runTaskAsynchronously(this);
-
         this.PrintNMSdata();
     }
 
@@ -231,9 +227,6 @@ public class ForgePermittor extends JavaPlugin {
             Reload();
             System.out.println(getConfigInfo());
             sender.sendMessage(ChatColor.GREEN + "Plugin reloaded!");
-        }
-        if (args[0].equalsIgnoreCase("checkupdate")){
-            new UpdateChecker(this).runTaskAsynchronously(this);
         }
         return true;
 
