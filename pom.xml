@@ -63,18 +63,23 @@
             <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
             <version>2.7.4</version>
-        </dependency>-->
+        </dependency>
         <dependency>
+            <groupId>com.massivecraft</groupId>
+            <artifactId>MassiveCore</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+        <!--<dependency>
             <groupId>techcable.minecraft</groupId>
             <artifactId>factionsapi</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/factionsapi-base-1.0.0-SNAPSHOT.jar</systemPath>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>net.kaikk.mc</groupId>
             <artifactId>GriefPreventionPlus</artifactId>

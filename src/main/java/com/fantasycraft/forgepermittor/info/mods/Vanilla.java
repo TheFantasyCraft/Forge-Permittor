@@ -19,6 +19,7 @@ public class Vanilla extends IMod {
         addWeaponInterface(nmsResolver.getItemBow());
 
         addFoodInterface(nmsResolver.getItemFood());
+        addTradeBlockInterface(nmsResolver.getSignBlock());
     }
 
     @Override

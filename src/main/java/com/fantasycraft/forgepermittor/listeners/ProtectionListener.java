@@ -52,7 +52,7 @@ public class ProtectionListener extends DisableableListener implements Listener 
                     return;
                 }
             }
-            if (event.hasBlock() &&  event.useInteractedBlock() != Event.Result.DENY) {
+            if (event.hasBlock() && event.useInteractedBlock() != Event.Result.DENY) {
                 ForgePermittor.log("BlockType: " + getValidator().CheckBlock(event.getClickedBlock()).toString(), true);
                 if (!getProtectionManager().CanUseBlock(event.getPlayer(), event.getClickedBlock(), getValidator().CheckBlock(event.getClickedBlock()))) {
                     event.setUseInteractedBlock(Event.Result.DENY);

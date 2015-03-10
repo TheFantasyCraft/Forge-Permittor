@@ -5,6 +5,9 @@ import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.protection.IprotectionPlugin;
 import com.fantasycraft.forgepermittor.protection.MessageType;
+import com.massivecraft.factions.Rel;
+import com.massivecraft.factions.entity.*;
+import com.massivecraft.massivecore.ps.PS;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -12,20 +15,11 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import techcable.minecraft.factionsapi.Faction;
-import techcable.minecraft.factionsapi.Factions;
-import techcable.minecraft.factionsapi.FactionsAPI;
 
 /**
  * Created by thomas on 8/16/2014.
  */
 public class FactionsPlugin implements IprotectionPlugin {
-
-    private final Factions factions;
-
-    public FactionsPlugin(){
-        this.factions = FactionsAPI.getInstance();
-    }
 
     @Override
     public boolean CanUseBlock(Player player, Block block, BlockType type) {
@@ -48,8 +42,8 @@ public class FactionsPlugin implements IprotectionPlugin {
     }
 
     private boolean canAccesLocation(Player player, Location location){
-        Faction faction = factions.getOwningFaction(location);
-        return faction.isNone() || faction.isAlly((factions.getFPlayer(player))) || faction.isMember((factions.getFPlayer(player)));
+        MPlayer fplayer = MPlayer.get(player);
+        return MPerm.getPermButton().has(fplayer, fplayer.getFaction(), false) || fplayer.isUsingAdminMode();
     }
 
     @Override
@@ -66,13 +60,13 @@ public class FactionsPlugin implements IprotectionPlugin {
     public boolean CanDamage(Player player) {
         Entity damager = player.getLastDamageCause() instanceof EntityDamageByEntityEvent ? ((EntityDamageByEntityEvent) player.getLastDamageCause()).getDamager() : null;
         if (damager instanceof Player)
-            return factions.getFPlayer(player).getFaction().isEnemy(factions.getFPlayer((OfflinePlayer) damager));
-        return factions.getOwningFaction(player.getLocation()).isSafezone();
+            return canAccesLocation((Player) damager, player.getLocation());
+        return false;
     }
 
     @Override
     public boolean BlockInProtectedLand(Block block) {
-        return !factions.getOwningFaction(block.getLocation()).isNone();
+        return !BoardColl.get().getFactionAt(PS.valueOf(block)).isNone();
     }
 
     @Override
