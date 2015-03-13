@@ -43,7 +43,7 @@ public class FactionsPlugin implements IprotectionPlugin {
 
     private boolean canAccesLocation(Player player, Location location){
         MPlayer fplayer = MPlayer.get(player);
-        return MPerm.getPermButton().has(fplayer, fplayer.getFaction(), false) || fplayer.isUsingAdminMode();
+        return MPerm.getPermButton().has(fplayer, BoardColl.get().getFactionAt(PS.valueOf(location)), false) || fplayer.isUsingAdminMode();
     }
 
     @Override
