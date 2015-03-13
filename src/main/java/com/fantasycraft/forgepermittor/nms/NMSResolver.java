@@ -87,7 +87,7 @@ public class NMSResolver {
         this.ItemBlock = getItemList().get(Material.VINE.getId()).getClass().getSuperclass();
         this.ItemDoor = getItemList().get(Material.IRON_DOOR.getId()).getClass();
         this.setItemBow(getItemList().get(Material.BOW.getId()).getClass());
-        this.setSignBlock(getItemList().get(Material.WALL_SIGN.getId()).getClass());
+        this.setSignBlock(getBlockList().get(Material.WALL_SIGN.getId()).getClass());
 
         this.blockHandler = new BlockHandler(this);
         this.craftWorldHandler = new CraftWorldHandler(this);
