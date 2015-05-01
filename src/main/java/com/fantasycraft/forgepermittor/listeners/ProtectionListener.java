@@ -44,7 +44,7 @@ public class ProtectionListener extends DisableableListener implements Listener 
         try {
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
-                if (!getProtectionManager().CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), getValidator().CheckItem(event.getItem())))
+                if (!getProtectionManager().canUseItem(event, getValidator().CheckItem(event.getItem())))
                 {
                     event.setUseItemInHand(Event.Result.DENY);
                     event.setUseInteractedBlock(Event.Result.DENY);
@@ -54,9 +54,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
             }
             if (event.hasBlock() && event.useInteractedBlock() != Event.Result.DENY) {
                 ForgePermittor.log("BlockType: " + getValidator().CheckBlock(event.getClickedBlock()).toString(), true);
-                if (!getProtectionManager().CanUseBlock(event.getPlayer(), event.getClickedBlock(), getValidator().CheckBlock(event.getClickedBlock()))) {
+                /*if (!getProtectionManager().CanUseBlock(event.getPlayer(), event.getClickedBlock(), getValidator().CheckBlock(event.getClickedBlock()))) {
                     event.setUseInteractedBlock(Event.Result.DENY);
-                }
+                }*/
             }
         }
         catch (Exception e){
@@ -70,10 +70,10 @@ public class ProtectionListener extends DisableableListener implements Listener 
     {
         if (!isEnabled())
             return;
-
+/*
         if ((event.getEntity() instanceof Player) && event.getDamager().getType().getName() == null && !getProtectionManager().CanDamage((Player) event.getEntity())) {
             event.setCancelled(true);
-        }
+        }*/
     }
 
     @EventHandler
@@ -114,9 +114,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
 
     private boolean CheckBlockPlaceforContainer(Player player, Block block){
         try {
-            if ( block.getTypeId() != 0 && getValidator().CheckBlock(block) == BlockType.Container )
+           /* if ( block.getTypeId() != 0 && getValidator().CheckBlock(block) == BlockType.Container )
                if (!getProtectionManager().CanBreakBlock(player, block))
-                   return true;
+                   return true;*/
 
         } catch (Exception e) {
             ForgePermittor.log(Util.stackTraceToString(e), true);
@@ -144,9 +144,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
     @EventHandler
     public void entityInteractEvent(PlayerInteractEntityEvent event){
         if (!event.isCancelled() && event.getRightClicked() != null) {
-            boolean allowed = protectionManager.CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), ItemType.Item);
+            /*boolean allowed = protectionManager.CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), ItemType.Item);
             if (!allowed)
-                event.setCancelled(true);
+                event.setCancelled(true);*/
         }
     }
 }

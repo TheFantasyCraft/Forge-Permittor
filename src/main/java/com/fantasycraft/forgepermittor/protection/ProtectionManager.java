@@ -1,108 +1,43 @@
 package com.fantasycraft.forgepermittor.protection;
 
-import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
-import lombok.Getter;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredListener;
 
 /**
- * Created by thomas on 8/16/2014.
+ * Created by thomas15v on 1/05/15.
  */
 public class ProtectionManager {
 
-    @Getter
-    List<IprotectionPlugin> Plugins;
+    private final ItemStack ITEM = new ItemStack(Material.LAVA_BUCKET);
 
-    public ProtectionManager(){
-        this.Plugins = new ArrayList<IprotectionPlugin>();
+    public boolean canUseItem(PlayerInteractEvent event, ItemType type){
+        if (type == ItemType.Food || type ==  ItemType.Block || type == ItemType.Container || type == ItemType.Weapon)
+            return true;
+        else
+            return canUseItem(event);
+
     }
 
-    public void RegisterPlugin(IprotectionPlugin plugin){
-        for (IprotectionPlugin p : getPlugins()) {
-            System.out.println("load: " + p.getname());
-            if (p.getname().equalsIgnoreCase(plugin.getname()))
-                return;
-        }
-        this.Plugins.add(plugin);
-    }
-
-    public void UnloadPlugin(IprotectionPlugin plugin){
-        this.Plugins.remove(plugin);
-    }
-
-    public void UnloadPlugin(String plugin){
-        for (IprotectionPlugin p : getPlugins()) {
-            System.out.println("unload: " + p.getname());
-            if (p.getname().equalsIgnoreCase(plugin))
-                UnloadPlugin(p);
-        }
-    }
-
-    public boolean CanUseBlock(Player player, Block block, BlockType type) {
-        for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanUseBlock(player, block, type)){
-                p.SendErrorMessage(player, MessageType.InteractNotAllowed);
-                return false;
-            }
-
-        }
-        return true;
-    }
-
-    public boolean CanUseItem(Player player, Location location, ItemType type) {
-        for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanUseItem(player, location, type)) {
-                p.SendErrorMessage(player, MessageType.UsageNotAllowed);
-                return false;
+    private boolean canUseItem(PlayerInteractEvent event){
+        PlayerInteractEvent checkEvent = new PlayerInteractEvent(event.getPlayer(), event.getAction(), ITEM, event.getClickedBlock(), event.getBlockFace());
+        for (RegisteredListener listener : checkEvent.getHandlers().getRegisteredListeners())
+        {
+            System.out.println(listener.getPlugin().getName());
+            if (listener.getPlugin().getName().equalsIgnoreCase("towny")) {
+                System.out.print("Calling towny " + checkEvent.isCancelled());
+                try {
+                    listener.callEvent(checkEvent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.print("towny called " + checkEvent.isCancelled());
             }
         }
-        return true;
+        return !checkEvent.isCancelled();
     }
 
-    public boolean CanBreakBlock(Player player, Block block) {
-        for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanBreakBlock(player, block)) {
-                p.SendErrorMessage(player, MessageType.ToCloseToContainer);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean CanDamage(Player player) {
-        for (IprotectionPlugin p : getPlugins()){
-            if (!p.CanDamage(player)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean BlockInProtectedLand(Block block) {
-        for (IprotectionPlugin p : getPlugins()){
-            if (p.BlockInProtectedLand(block))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean HasPlugin(String name){
-        for (IprotectionPlugin p : getPlugins()){
-            if (!p.getname().equalsIgnoreCase(name))
-                return true;
-        }
-        return false;
-    }
-
-    public String getname() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (IprotectionPlugin p : getPlugins())
-            stringBuilder.append(p.getname());
-        return stringBuilder.toString();
-    }
 }

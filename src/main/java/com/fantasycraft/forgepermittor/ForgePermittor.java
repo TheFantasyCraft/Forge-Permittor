@@ -5,20 +5,14 @@ import com.fantasycraft.forgepermittor.listeners.DeathMessageListener;
 import com.fantasycraft.forgepermittor.listeners.FakePlayerHandler;
 import com.fantasycraft.forgepermittor.listeners.ProtectionListener;
 import com.fantasycraft.forgepermittor.nms.NMSResolver;
-import com.fantasycraft.forgepermittor.protection.plugins.*;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
-import com.palmergames.bukkit.towny.Towny;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.kaikk.mc.gpp.GriefPreventionPlus;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -128,7 +122,7 @@ public class ForgePermittor extends JavaPlugin {
     }
 
     private void RegisterPlugins(){
-        Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
+        /*Towny towny = ((Towny)getServer().getPluginManager().getPlugin("Towny"));
         if (towny != null) {
             if (getConfigInfo().isTowny()) {
                 log("Towny Registered!", false);
@@ -185,7 +179,7 @@ public class ForgePermittor extends JavaPlugin {
                 getProtectionManager().UnloadPlugin("Factions");
             }
 
-        }
+        }*/
     }
 
     private void PrintNMSdata(){
