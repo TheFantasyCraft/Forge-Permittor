@@ -1,9 +1,18 @@
 package com.fantasycraft.forgepermittor.protection;
 
+import com.fantasycraft.forgepermittor.ForgePermittor;
 import com.fantasycraft.forgepermittor.info.types.BlockType;
 import com.fantasycraft.forgepermittor.info.types.ItemType;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredListener;
@@ -37,22 +46,41 @@ public class ProtectionManager {
         return true;
     }
 
-    private boolean checkPlayerInteractEventEvent(PlayerInteractEvent event, boolean block){
+    private boolean checkPlayerInteractEventEvent(PlayerInteractEvent event, boolean block) {
         PlayerInteractEvent checkEvent = new PlayerInteractEvent(event.getPlayer(), event.getAction(),
                 block ? null : ITEM,
                 block ? new FakeBlock(event.getClickedBlock()) : event.getClickedBlock(),
                 event.getBlockFace());
+                callEvent(checkEvent);
+                ForgePermittor.log("ReCheckEvent; " + event.isCancelled() + " RealEvent: " + event.isCancelled() , true);
 
-        for (RegisteredListener listener : checkEvent.getHandlers().getRegisteredListeners())
-        {
-            System.out.println(listener.getPlugin().getName());
+
+        return !checkEvent.isCancelled();
+    }
+
+    private void callEvent(Event event){
+        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners()) {
             if (enabledPlugins.contains(listener.getPlugin().getName())) {
                 try {
-                    listener.callEvent(checkEvent);
+                    listener.callEvent(event);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        return !checkEvent.isCancelled();
+    }
+
+    public boolean canAccesLocation(Player player, Location location){
+        return canBreakBlock(player, location.getBlock());
+    }
+
+    public boolean canBreakBlock(Player player, Block block) {
+        BlockBreakEvent event = new BlockBreakEvent(block, player);
+        callEvent(event);
+        return !event.isCancelled();
+    }
+
+    public boolean canDamage(EntityDamageByEntityEvent event) {
+       // EntityDamageEvent checkEvent =
+    }
 }

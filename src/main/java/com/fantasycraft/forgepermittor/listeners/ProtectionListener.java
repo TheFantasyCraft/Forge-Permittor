@@ -7,16 +7,15 @@ import com.fantasycraft.forgepermittor.info.types.ItemType;
 import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import lombok.Getter;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -54,9 +53,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
             }
             if (event.hasBlock() && event.useInteractedBlock() != Event.Result.DENY) {
                 ForgePermittor.log("BlockType: " + getValidator().CheckBlock(event.getClickedBlock()).toString(), true);
-                /*if (!getProtectionManager().CanUseBlock(event.getPlayer(), event.getClickedBlock(), getValidator().CheckBlock(event.getClickedBlock()))) {
+                if (!getProtectionManager().canUseBlock(event, getValidator().CheckBlock(event.getClickedBlock()))) {
                     event.setUseInteractedBlock(Event.Result.DENY);
-                }*/
+                }
             }
         }
         catch (Exception e){
@@ -70,10 +69,11 @@ public class ProtectionListener extends DisableableListener implements Listener 
     {
         if (!isEnabled())
             return;
-/*
-        if ((event.getEntity() instanceof Player) && event.getDamager().getType().getName() == null && !getProtectionManager().CanDamage((Player) event.getEntity())) {
+
+        if ((event.getEntity() instanceof Player) && event.getDamager().getType() == EntityType.UNKNOWN &&
+                !getProtectionManager().canDamage((Player) event.getEntity())) {
             event.setCancelled(true);
-        }*/
+        }
     }
 
     @EventHandler
@@ -114,9 +114,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
 
     private boolean CheckBlockPlaceforContainer(Player player, Block block){
         try {
-           /* if ( block.getTypeId() != 0 && getValidator().CheckBlock(block) == BlockType.Container )
-               if (!getProtectionManager().CanBreakBlock(player, block))
-                   return true;*/
+           if ( block.getTypeId() != 0 && getValidator().CheckBlock(block) == BlockType.Container )
+               if (!getProtectionManager().canBreakBlock(player, block))
+                   return true;
 
         } catch (Exception e) {
             ForgePermittor.log(Util.stackTraceToString(e), true);
@@ -127,7 +127,6 @@ public class ProtectionListener extends DisableableListener implements Listener 
     private void blockItemUse(Player player){
         Inventory inventory = player.getInventory();
         ItemStack item = player.getItemInHand();
-        //int itemlocation = inventory.
         boolean hasreplaced = false;
         inventory.remove(item);
         for (int i = 0; i < inventory.getSize(); i++){
@@ -144,9 +143,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
     @EventHandler
     public void entityInteractEvent(PlayerInteractEntityEvent event){
         if (!event.isCancelled() && event.getRightClicked() != null) {
-            /*boolean allowed = protectionManager.CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), ItemType.Item);
+            boolean allowed = protectionManager.canAccesLocation(event.getPlayer(), event.getRightClicked().getLocation());
             if (!allowed)
-                event.setCancelled(true);*/
+                event.setCancelled(true);
         }
     }
 }
