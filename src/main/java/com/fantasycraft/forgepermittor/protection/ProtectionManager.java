@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +29,10 @@ public class ProtectionManager {
 
     private final ItemStack ITEM = new ItemStack(Material.LAVA_BUCKET);
     private List<String> enabledPlugins;
+    private final int scanRange = Bukkit.getViewDistance() * 16 + 8;
 
-    public ProtectionManager(){
-        enabledPlugins = Arrays.asList("Towny", "Factions", "PlotSquared", "GriefPrevention", "GriefPreventionPlus");
+    public ProtectionManager(List<String> enabledPlugins){
+        this.enabledPlugins = enabledPlugins;
     }
 
     public boolean canUseItem(PlayerInteractEvent event, ItemType type){
@@ -80,7 +83,34 @@ public class ProtectionManager {
         return !event.isCancelled();
     }
 
+    public boolean canBreakBlock(Block block){
+        for (Entity entity : getNearbyEntities(block.getLocation()))
+            if (entity instanceof Player)
+                if (!canBreakBlock((Player) entity, block))
+                    return false;
+        return true;
+    }
+
+    private List<Entity> getNearbyEntities(Location location){
+        List<Entity> near = new ArrayList<Entity>();
+        for(Entity e : location.getWorld().getEntities()) {
+            if(e.getLocation().distance(location) <= scanRange)
+                near.add(e);
+        }
+        return near;
+    }
+
     public boolean canDamage(EntityDamageByEntityEvent event) {
-       // EntityDamageEvent checkEvent =
+        for (Entity entity : getNearbyEntities(event.getEntity().getLocation()) ){
+            if (entity != event.getEntity() && entity instanceof Player)
+            {
+                EntityDamageByEntityEvent checkEvent = new EntityDamageByEntityEvent(entity, event.getEntity(), EntityDamageEvent.DamageCause.CUSTOM, event.getDamage());
+                callEvent(checkEvent);
+                System.out.println(((Player) entity).getName() + " " + checkEvent.isCancelled());
+                if (checkEvent.isCancelled())
+                    return false;
+            }
+        }
+        return true;
     }
 }

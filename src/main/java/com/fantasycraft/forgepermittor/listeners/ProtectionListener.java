@@ -70,9 +70,11 @@ public class ProtectionListener extends DisableableListener implements Listener 
         if (!isEnabled())
             return;
 
-        if ((event.getEntity() instanceof Player) && event.getDamager().getType() == EntityType.UNKNOWN &&
-                !getProtectionManager().canDamage((Player) event.getEntity())) {
+        if ((event.getEntity() instanceof Player) && event.getDamager().getType().getTypeId() > 200 &&
+                !getProtectionManager().canDamage(event)) {
             event.setCancelled(true);
+            event.getEntity().setFireTicks(0);
+            ((Player) event.getEntity()).setHealth(20);
         }
     }
 
