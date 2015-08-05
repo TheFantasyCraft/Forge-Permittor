@@ -37,7 +37,6 @@ public class TownyPlugin implements IprotectionPlugin {
             return PlayerCacheUtil.getCachePermission(player, block.getLocation(), Material.CHEST.getId(), (byte) 0, TownyPermission.ActionType.SWITCH);
         else
             return true; //Just to be sure
-
     }
 
     public boolean CanUseItem(Player player, Location location, ItemType type){

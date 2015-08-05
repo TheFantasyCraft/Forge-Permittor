@@ -8,6 +8,7 @@ import com.fantasycraft.forgepermittor.nms.util.Util;
 import com.fantasycraft.forgepermittor.protection.ProtectionManager;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -42,6 +43,8 @@ public class ProtectionListener extends DisableableListener implements Listener 
         if (!isEnabled())
             return;
         try {
+            if (event.hasBlock() && event.getClickedBlock().getType() == Material.SIGN)
+                return;
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
                 if (!getProtectionManager().CanUseItem(event.getPlayer(), event.getPlayer().getLocation(), getValidator().CheckItem(event.getItem())))
