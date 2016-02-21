@@ -100,10 +100,9 @@ public class NMSResolver {
     }
 
     private String findCraftBukkit(){
-        Package Craftbukkit = Package.getPackage(CraftbukkitLocation);
-        for (Package e : Craftbukkit.getPackages()){
-            if (e.getName().startsWith(CraftbukkitLocation + ".v")) {
-                return CraftbukkitLocation + "." + e.getName().split("\\.")[3];
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()){
+            if (e.getClassName().startsWith(CraftbukkitLocation + ".v")) {
+                return CraftbukkitLocation + "." + e.getClassName().split("\\.")[3];
             }
         }
         return CraftbukkitLocation;
