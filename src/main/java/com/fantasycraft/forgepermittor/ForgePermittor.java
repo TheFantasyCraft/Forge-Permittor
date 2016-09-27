@@ -13,7 +13,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.kaikk.mc.gpp.GriefPreventionPlus;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -160,18 +159,6 @@ public class ForgePermittor extends JavaPlugin {
             else{
                 log("GriefPrevention Found but Disabled!", false);
                 getProtectionManager().UnloadPlugin("GriefPrevention");
-            }
-        }
-		
-        GriefPreventionPlus griefPreventionPlus = (GriefPreventionPlus) getServer().getPluginManager().getPlugin("GriefPreventionPlus");
-        if (griefPreventionPlus != null) {
-            if (getConfigInfo().isGriefpreventionplus()) {
-                log("GriefPreventionPlus Registered!", false);
-                getProtectionManager().RegisterPlugin(new GriefPreventionPlusPlugin());
-            }
-            else{
-                log("GriefPreventionPlus Found but Disabled!", false);
-                getProtectionManager().UnloadPlugin("GriefPreventionPlus");
             }
         }
 

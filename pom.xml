@@ -8,7 +8,7 @@
     <groupId>com.fantasycraft</groupId>
     <artifactId>Forge_Permittor</artifactId>
 
-    <version>0.4-BETA</version>
+    <version>0.5-BETA</version>
     <name>Forge Permittor</name>
 
     <properties>
@@ -22,10 +22,6 @@
         <repository>
             <id>sk89q-repo</id>
             <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
-            <id>FantasyCraftRepo</id>
-            <url>http://repo.thomas15v.net/</url>
         </repository>
         <repository>
             <id>bukkit-repo</id>
@@ -59,31 +55,29 @@
             <groupId>com.palmergames</groupId>
             <artifactId>Towny</artifactId>
             <version>0.89.2.0</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Towny.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.ryanhamshire</groupId>
             <artifactId>GriefPrevention</artifactId>
             <version>7.7</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/GriefPrevention.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>Factions</artifactId>
-            <version>2.7.4</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+            <version>11.0.1b</version>
+            <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.massivecraft</groupId>
             <artifactId>MassiveCore</artifactId>
-            <version>2.7.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.kaikk.mc</groupId>
-            <artifactId>griefpreventionplus</artifactId>
+            <scope>system</scope>
             <version>11.0.1b</version>
-            <scope>provided</scope>
+            <systemPath>${project.basedir}/lib/MassiveCore.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -43,7 +43,7 @@ public class ProtectionListener extends DisableableListener implements Listener 
         if (!isEnabled())
             return;
         try {
-            if (event.hasBlock() && event.getClickedBlock().getType() == Material.SIGN)
+            if (event.hasBlock() && (event.getClickedBlock().getType() == Material.SIGN_POST || event.getClickedBlock().getType() == Material.WALL_SIGN))
                 return;
             if (event.hasItem() && event.useItemInHand() != Event.Result.DENY){
                 ForgePermittor.log("ItemType: " + getValidator().CheckItem(event.getItem()).toString(), true);
@@ -83,11 +83,9 @@ public class ProtectionListener extends DisableableListener implements Listener 
     public void onBlockPlaceEvent(BlockPlaceEvent event){
         if (!isEnabled())
             return;
-
         if (event.isCancelled())
             return;
         try {
-
             BlockType type = BlockType.Unknown;
             Player player = event.getPlayer();
             Block block = event.getBlock();
